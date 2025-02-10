@@ -1,5 +1,5 @@
 # Project_Flask_Python_Web_SD
-🐍 Flask Python Web SD Project ini adalah aplikasi web berbasis Flask yang dikembangkan menggunakan Python untuk keperluan Sekolah Dasar (SD) Bintara 2 Kota BEkasiu. Aplikasi ini dirancang untuk membantu pengelolaan data sekolah, guru, siswa, serta fitur-fitur pendukung lainnya.  
+🐍 Flask Python Web SD Project ini adalah aplikasi web berbasis Flask yang dikembangkan menggunakan Python untuk keperluan Sekolah Dasar (SD) Bintara 2 Kota Bekasi. Aplikasi ini dirancang untuk membantu pengelolaan data sekolah, guru, siswa, serta fitur-fitur pendukung lainnya.  
 
 ✨ Fitur Utama
 🔹 Manajemen Data: CRUD untuk siswa, guru, dan kelas
