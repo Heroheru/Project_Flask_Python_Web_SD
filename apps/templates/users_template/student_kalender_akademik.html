@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student</title>
+</head>
+<body>
+
+
+    {% extends "layouts/base.html" %}
+
+    {% block title %} UI Datatables {% endblock %} 
+    
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}{% endblock stylesheets %}
+    
+    {% block content %}
+    
+
+
+        <div class="content">
+            <div class="page-inner">
+                <div class="page-header">
+                    
+                </div>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 style="text-align: center;" class="card-title"><b>KALENDER AKADEMIK SEMESTER {{setting.semester}} TAHUN AJARAN {{setting.tahun_ajaran}}</b></h4>
+                     
+                        </div>           
+                        <div class="card-body">                         
+                            <div class="card-header" id="card-header-head-table-1">
+                                <!-- <div style="text-align: center; color: #2e775a;" class="card-title">
+                                  <h4><b>KALENDER AKADEMIK SEMESTER GANJIL 2024/2025</b></h4>
+                                </div> -->
+                            
+                                  <table class="table table-hover"  style="border: 1px solid black; " >
+                                    <thead >
+                                      <tr style="text-align: center; ">
+                                        <th style="background-color: #2e775a; color: #feff9f; border: 1px solid black;" scope="col">Agenda</th>
+                                        <th style="background-color: #2e775a; color: #feff9f; border: 1px solid black;" scope="col">Tanggal</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {% for kegiatan in kegiatan_akademik %}
+                                      <tr>
+                                        <td style="border: 1px solid black;">{{kegiatan.Kegiatan}}</td>
+                                        <td style="text-align: center; border: 1px solid black;">{{kegiatan.Formatted_tanggal_mulai}}  -  {{kegiatan.Formatted_tanggal_selesai}}</td>
+                                      </tr>
+                                      {% endfor %}
+                                    </tbody>
+                                  </table>
+                            
+                              </div>           
+                        </div>
+            </div>
+        </div>
+    </div>
+      
+</div>
+    
+    {% endblock content %}
+    
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+    
+       
+    {% endblock javascripts %}
+    
+</body>
+</html>

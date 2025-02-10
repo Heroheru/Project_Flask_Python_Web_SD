@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../../static/assets/img/LogoSDBINTARA2BEKASI.png" type="image/x-icon"/>
+    <title>Student</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    />
+
+    <style>
+      .menu-container {
+        overflow-x: auto; /* Mengizinkan scrolling horizontal */
+        white-space: nowrap; /* Mencegah pembungkusan baris */
+        /* Border untuk menu */
+        padding: 10px 10px; /* Padding atas dan bawah */
+        display: flex;
+        justify-content: center;
+      }
+
+      .menu-item {
+        display: inline-block; /* Menyusun item secara horizontal */
+        /* Padding item */
+
+        margin: 0 10px; /* Margin antar item */
+        background-color: #ffffff; /* Warna latar belakang */
+        color: white; /* Warna teks */
+        text-align: center; /* Memusatkan teks */
+        border-radius: 5px; /* Sudut membulat */
+        text-decoration: none; /* Menghapus garis bawah */
+        transition: transform 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .menu-item:hover {
+        transform: scale(1.1);
+      }
+
+      .pembungkus-guru {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+      }
+
+      .pembungkus-acara {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+      }
+
+      .card-guru {
+        width: 300px;
+        padding: 5px;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        background-color: rgb(199, 245, 163);
+        border-radius: 5px;
+      }
+
+      .img-card-guru {
+        width: 150px;
+        height: 150px;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-acara {
+        width: 300px;
+        padding: 15px;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        background-color: #feff9f;
+        border-radius: 15px;
+        border: 1px solid #2e775a;
+      }
+
+      .img-card-acara {
+        width: 170px;
+        height: 125px;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      #select-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 200px;
+        height: 70px;
+        border-radius: 10px;
+        background-color: rgb(218, 255, 176);
+        padding: 10px;
+      }
+
+      .kapsul-container {
+        width: 180px;
+        height: 25px;
+        border-radius: 50px;
+        background-color: rgb(252, 255, 249);
+        padding: 5px;
+      }
+
+
+      .select-container-hp {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 115px;
+        height: 40px;
+        border-radius: 5px;
+        background-color: rgb(218, 255, 176);
+        padding: 5px;
+      }
+
+      .kapsul-container-hp {
+        width: 100px;
+        height: 20px;
+        border-radius: 10px;
+        background-color: rgb(252, 255, 249);
+     
+       
+      }
+
+      #gambar_siswa_baru{
+        width: 100%;
+      }
+
+        .button_hidden_siswa_baru{
+          width: 200px; 
+          height: 50px; 
+          background-color:#fbd634;
+          color: #a10000;
+          font-weight: bold;
+          border: none;
+          border-radius: 5px;
+          transition: transform 0.3s ease;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .button_hidden_siswa_baru:hover{
+          transform: scale(1.1);
+        }
+      @media (max-width: 768px) {
+        #gambar_siswa_baru{
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .button_hidden_siswa_baru{
+        max-width: 130px;
+      }
+        }
+
+      /* Gaya Umum */
+      .menu-container-hp {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .menu-item-hp {
+        flex: 1 1 25%; /* Maksimal 4 item per baris */
+        display: flex;
+        justify-content: center;
+      }
+      .menu-item-hp img {
+        width: 8vh; /* Sesuaikan ukuran gambar di layar HP */
+        border :1px black solid;
+        border-radius: 10px;
+      }
+      
+      /* Tambahkan ini di file CSS Anda */
+#loading {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: white;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner {
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes scroll-left {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+        /* Kontainer untuk marquee */
+        .marquee {
+            width: 100%;
+            overflow: hidden; /* Pastikan teks tidak keluar dari container */
+            white-space: nowrap; /* Hindari teks membungkus */
+            position: relative;
+            background-color: #117313;
+            padding: 10px 0;
+        }
+
+        /* Teks yang bergerak */
+        .marquee p {
+            color: #efff45;
+            font-size: 24px; /* Ukuran teks untuk desktop */
+            font-weight:bold;
+            display: inline-block;
+            animation: scroll-left 20s linear infinite; /* Durasi animasi 20 detik */
+            margin: 0px;
+        
+        }
+
+        /* Responsivitas untuk perangkat seluler */
+        @media (max-width: 768px) {
+            .marquee {
+            width: 100%;
+            overflow: hidden; /* Pastikan teks tidak keluar dari container */
+            white-space: nowrap; /* Hindari teks membungkus */
+            position: relative;
+            background-color:#117313;
+            padding: 10px 0;
+        }
+            .marquee p {
+                font-size: 15px; /* Ukuran teks lebih kecil untuk perangkat kecil */
+                 display: inline-block;
+            animation: scroll-left 25s linear infinite; /* Durasi animasi 20 detik */
+            margin: 0px;
+            }
+        }
+
+
+
+
+    </style>
+  </head>
+  <body>
+    {% extends "layouts/base.html" %} {% block title %} UI Datatables {%
+    endblock %}
+
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}{% endblock stylesheets %} {% block content %}
+    <div id="loading">
+        <div class="spinner"></div>
+    </div>
+    
+    
+    <div class="content">
+      <div class="page-inner">
+        
+        <div class="card">
+          <!-- <div class="card-body"> -->
+            <!-- Carousel -->
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+              <!-- Indicators -->
+              <ol class="carousel-indicators">
+                <li
+                  data-target="#myCarousel"
+                  data-slide-to="0"
+                  class="active"
+                ></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+              </ol>
+
+              <!-- Carousel items -->
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img
+                    style="height: 40vw"
+                    src="../../static/assets/img/Sekolah1.jpg"
+                    class="d-block w-100"
+                    alt="Slide 1"
+                    loading="lazy"
+                  />
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      justify-content: center;
+                    "
+                    class="carousel-caption"
+                  >
+                    <h3 class="d-none d-md-block">
+                      <b> SELAMAT DATANG DI WEBSITE SDN BINTARA II BEKASI</b>
+                    </h3>
+
+
+                    <h5 class="d-block d-md-none">
+                      <b> SELAMAT DATANG DI WEBSITE SDN BINTARA II BEKASI</b>
+                    </h5>
+
+ 
+                 
+
+
+                   
+                     <form
+                     id="autoSubmitForm"
+                     action="{{url_for('home_blueprint.find_data_jadwal_pelajaran')}}"
+                     method="post"
+                    
+                   >
+                                      <!-- form-jadwal-pelajaran-desktop -->
+                   <div id="select-container" class=" d-none d-md-block">
+                    <div style="color: #2e775a">
+                      <b>CARI JADWAL PELAJARAN</b>
+                    </div>
+
+                    <select
+                      name="pilih_kelas"
+                      class="kapsul-container"
+                      onchange="document.getElementById('autoSubmitForm').submit();"
+                      style="font-size: 10px;"
+                    >
+                      <option value="" disabled selected>
+                        Pilih Kelas
+                      </option>
+                      {%for kelas in data_kelas%}
+                      <option value="{{kelas.id_kelas}}">
+                        {{kelas.nama_kelas}}
+                      </option>
+                      {%endfor%}
+                    </select>
+                  </div>
+
+  <!-- form-jadwal-pelajaran-hp -->
+
+                     <div class="select-container-hp  d-block d-md-none">
+                       <div style="color: #2e775a; font-size: 7px;">
+                         <b>CARI JADWAL PELAJARAN</b>
+                       </div>
+
+                       <select
+                         name="pilih_kelas"
+                         class="kapsul-container-hp"
+                         onchange="document.getElementById('autoSubmitForm').submit();"
+                         style="font-size: 10px;"
+                       >
+                         <option value="" disabled selected>
+                           Pilih Kelas
+                         </option>
+                         {%for kelas in data_kelas%}
+                         <option value="{{kelas.id_kelas}}">
+                           {{kelas.nama_kelas}}
+                         </option>
+                         {%endfor%}
+                       </select>
+                     </div>
+
+
+
+                   </form>
+
+
+                  </div>
+                </div>
+
+                {% for banner in gambar_banner%}
+                <div class="carousel-item">
+                  <img
+                    style="height: 40vw"
+                    src="{{banner.img_banner_path}}"
+                    class="d-block w-100"
+                    alt="Slide"
+                    loading="lazy"
+                  />
+                </div>
+                {%endfor%}
+              </div>
+
+              <!-- Left and right controls -->
+              <a
+                class="carousel-control-prev"
+                href="#myCarousel"
+                role="button"
+                data-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a
+                class="carousel-control-next"
+                href="#myCarousel"
+                role="button"
+                data-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+          <!-- </div> -->
+          <div class="marquee">
+        <p id="movingText"></p>
+    </div>
+        </div>
+
+
+        {% if show_banner %}
+        <div style="display: flex; justify-content: center; align-items: center; background-color: #fb3434;" class="card">
+          <div >
+           
+            <div >
+              <img id="gambar_siswa_baru" src="../../static/assets/img/IKON_MENU/banner_selamat_datang.png" loading="lazy" alt="">
+            </div>
+            <div>
+            
+
+
+            </div>
+            
+          </div>
+        </div>
+
+        <div 
+        style="display: flex; 
+        flex-direction: row; 
+        justify-content: space-around; 
+        align-items: center;
+        padding: 0px;  
+        background-color: rgb(249, 249, 249);
+        box-shadow: none;
+        " 
+
+        class="card">
+          <a href="{{url_for('home_blueprint.student_siswa_baru')}}"><button class="button_hidden_siswa_baru">
+           
+           LIHAT DAFTAR SISWA BARU
+          </button></a>
+
+          <a href="https://ppdb.bekasikota.go.id/"><button class="button_hidden_siswa_baru">
+            
+           LIHAT SITUS PPDB
+          </button></a>  
+
+        </div>
+        {% endif %}
+
+
+        <div style="text-align: center; color: #2e775a; background-color: b;" class="">
+          <h2><b>Daftar Menu</b></h2>
+        </div>
+        <!-- 
+        menu scroll Desktop -->
+        <div class="card d-none d-md-block">
+          <div class="card-body">
+            <div class="container">
+              <div class="menu-container">
+
+                {% if show_banner %}
+                <a href="{{url_for('home_blueprint.student_siswa_baru')}}" class="menu-item">
+                  <img
+                    style="width: 15vh; border-radius: 10px"
+                    src="../../static/assets/img/IKON_MENU/siswa_baru.png"
+                    alt=""
+                    loading="lazy"
+                  />
+                </a>
+                {% endif %}
+                <a href="{{url_for('home_blueprint.show_guru')}}" class="menu-item">
+                  <img
+                    style="width: 15vh; border-radius: 10px"
+                    src="../../static/assets/img/IKON_MENU/daftar_guru.png"
+                    alt=""
+                    loading="lazy"
+                  />
+                </a>
+                <a href="{{url_for('home_blueprint.show_kelas')}}" class="menu-item">
+                  <img
+                    style="width: 15vh; border-radius: 10px"
+                    src="../../static/assets/img/IKON_MENU/Daftar_kelas.png"
+                    alt=""
+                    loading="lazy"
+                  />
+                </a>
+                <a href="{{url_for('home_blueprint.find_data_student')}}" class="menu-item">
+                  <img
+                    style="width: 15vh; border-radius: 10px"
+                    src="../../static/assets/img/IKON_MENU/daftar_siswa.png"
+                    alt=""
+                    loading="lazy"
+                  />
+                </a>
+                <a href="{{url_for('home_blueprint.find_data_jadwal_pelajaran')}}" class="menu-item">
+                  <img
+                    style="width: 15vh; border-radius: 10px"
+                    src="../../static/assets/img/IKON_MENU/jadwal_pelajaran.png"
+                    alt=""
+                    loading="lazy"
+                  />
+                </a>
+                <a href="{{url_for('home_blueprint.find_data_jadwal_ujian')}}" class="menu-item">
+                  <img
+                    style="width: 15vh; border-radius: 10px"
+                    src="../../static/assets/img/IKON_MENU/jadwal_ujian.png"
+                    alt=""
+                    loading="lazy"
+                  />
+                </a>
+                <a href="{{url_for('home_blueprint.student_kalender_akademik')}}" class="menu-item">
+                  <img
+                    style="width: 15vh; border-radius: 10px"
+                    src="../../static/assets/img/IKON_MENU/kalender_akakademik.png"
+                    alt=""
+                    loading="lazy"
+                  />
+                </a>
+                <a href="{{url_for('home_blueprint.show_kegiatan')}}" class="menu-item">
+                  <img
+                    style="width: 15vh; border-radius: 10px"
+                    src="../../static/assets/img/IKON_MENU/kegiatan.png"
+                    alt=""
+                    loading="lazy"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Versi Mobile -->
+        <div class="card d-block d-md-none">
+          <div class="card-body">
+            <div class="container">
+              <div class="menu-container-hp">
+
+                
+                {% if show_banner %}
+                <a  style="
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+              " href="{{url_for('home_blueprint.student_siswa_baru')}}" class="menu-item-hp">
+                  <img
+                    
+                    src="../../static/assets/img/IKON_MENU/siswa_baru.png"
+                    alt=""
+                  />
+                  <p style="font-size: 8px">Siswa Baru</p>
+                </a>
+                {% endif %}
+
+
+                <a
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                  href="{{url_for('home_blueprint.show_guru')}}"
+                  class="menu-item-hp"
+                >
+                  <img
+                    src="../../static/assets/img/IKON_MENU/daftar_guru.png"
+                    alt=""
+                    loading="lazy"
+                  />
+                  <p style="font-size: 8px">Daftar Guru</p>
+                </a>
+
+                
+                <a
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                  href="{{url_for('home_blueprint.show_kelas')}}"
+                  class="menu-item-hp"
+                >
+                  <img
+                    src="../../static/assets/img/IKON_MENU/Daftar_kelas.png"
+                    alt=""
+                    loading="lazy"
+                  />
+                  <p style="font-size: 8px">Daftar Kelas</p>
+                </a>
+                <a
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                  href="{{url_for('home_blueprint.find_data_student')}}"
+                  class="menu-item-hp"
+                >
+                  <img
+                    src="../../static/assets/img/IKON_MENU/daftar_siswa.png"
+                    alt=""
+                    loading="lazy"
+                  />
+                  <p style="font-size: 8px">Daftar Siswa</p>
+                </a>
+                <a
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                  href="{{url_for('home_blueprint.find_data_jadwal_pelajaran')}}"
+                  class="menu-item-hp"
+                >
+                  <img
+                    src="../../static/assets/img/IKON_MENU/jadwal_pelajaran.png"
+                    alt=""
+                    loading="lazy"
+                  />
+                  <p style="font-size: 8px">Jadwal Pelajaran</p>
+                </a>
+                <a
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                  href="{{url_for('home_blueprint.find_data_jadwal_ujian')}}"
+                  class="menu-item-hp"
+                >
+                  <img
+                    src="../../static/assets/img/IKON_MENU/jadwal_ujian.png"
+                    alt=""
+                    loading="lazy"
+                  />
+                  <p style="font-size: 8px">Jadwal Ujian</p>
+                </a>
+                <a
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                  href="{{url_for('home_blueprint.student_kalender_akademik')}}"
+                  class="menu-item-hp"
+                >
+                  <img
+                    src="../../static/assets/img/IKON_MENU/kalender_akakademik.png"
+                    alt=""
+                    loading="lazy"
+                  />
+                  <p style="font-size: 8px">Kalender Akademik</p>
+                </a>
+                <a
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                  href="{{url_for('home_blueprint.show_kegiatan')}}"
+                  class="menu-item-hp"
+                >
+                  <img
+                    src="../../static/assets/img/IKON_MENU/kegiatan.png"
+                    alt=""
+                    loading="lazy"
+                  />
+                  <p style="font-size: 8px">Kegiatan</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- menu scroll Desktop -->
+        <div class="card d-none d-md-block">
+          <div class="card-body">
+            <div class="row row-demo-grid">
+              <div class="col-4">
+                <img
+                  style="width: 300px; border-radius: 10px"
+                  src="../../static/assets/img/Banner_visimisi/IMG_20241011_090316.jpg"
+                  alt=""
+                />
+              </div>
+              <div class="col-8">
+                <div
+                  style="
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  "
+                >
+                  <div
+                    style="background-color: #2e775a; width: 390px"
+                    id="myCarousel_visimisi"
+                    class="carousel slide"
+                    data-ride="carousel"
+                  >
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                      <li
+                        data-target="#myCarousel_visimisi"
+                        data-slide-to="0"
+                        class="active"
+                      ></li>
+                      <li
+                        data-target="#myCarousel_visimisi"
+                        data-slide-to="1"
+                      ></li>
+                      <li
+                        data-target="#myCarousel_visimisi"
+                        data-slide-to="2"
+                      ></li>
+                    </ol>
+                    <div class="carousel-inner">
+                      <div class="carousel-item active">
+                        <img
+                          style="width: 390px"
+                          src="../../static/assets/img/Banner_visimisi/VISI.png"
+                          alt="Slide 1"
+                        />
+                      </div>
+                      <div class="carousel-item">
+                        <img
+                          style="width: 390px"
+                          src="../../static/assets/img/Banner_visimisi/MISI.png"
+                          alt="Slide 2"
+                        />
+                      </div>
+                    </div>
+
+                    <!-- Left and right controls -->
+                    <a
+                      class="carousel-control-prev"
+                      href="#myCarousel_visimisi"
+                      role="button"
+                      data-slide="prev"
+                    >
+                      <span
+                        class="carousel-control-prev-icon"
+                        aria-hidden="true"
+                      ></span>
+                      <span  class="sr-only">Previous</span>
+                    </a>
+                    <a
+                      class="carousel-control-next"
+                      href="#myCarousel_visimisi"
+                      role="button"
+                      data-slide="next"
+                    >
+                      <span
+                        class="carousel-control-next-icon"
+                        aria-hidden="true"
+                      ></span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+         <!-- menu scroll Mobile -->
+         <div class="card d-block d-md-none">
+          <div class="card-body">
+            <div style="display: flex; justify-content: center;align-items: center;" class="row row-demo-grid">
+           
+              <div class="col-12">
+                <div
+                  style="
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  "
+                >
+                  <div
+                    style="width: 350px"
+                    id="myCarousel_visimisi_hp"
+                    class="carousel slide"
+                    data-ride="carousel"
+                  >
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                      <li
+                        data-target="#myCarousel_visimisi_hp"
+                        data-slide-to="0"
+                        class="active"
+                      ></li>
+                      <li
+                        data-target="#myCarousel_visimisi_hp"
+                        data-slide-to="1"
+                      ></li>
+                      <li
+                        data-target="#myCarousel_visimisi_hp"
+                        data-slide-to="2"
+                      ></li>
+                    </ol>
+                    <div class="carousel-inner">
+                      <div class="carousel-item active">
+                        <img
+                          style="width: 350px"
+                          src="../../static/assets/img/Banner_visimisi/VISI.png"
+                          alt="Slide 1"
+                        />
+                      </div>
+                      <div class="carousel-item">
+                        <img
+                          style="width: 350px"
+                          src="../../static/assets/img/Banner_visimisi/MISI.png"
+                          alt="Slide 2"
+                        />
+                      </div>
+                    </div>
+
+                    <!-- Left and right controls -->
+                    <a
+                      class="carousel-control-prev"
+                      href="#myCarousel_visimisi_hp"
+                      role="button"
+                      data-slide="prev"
+                    >
+                      <span
+                        class="carousel-control-prev-icon"
+                        aria-hidden="true"
+                      ></span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                    <a
+                      class="carousel-control-next"
+                      href="#myCarousel_visimisi_hp"
+                      role="button"
+                      data-slide="next"
+                    >
+                      <span
+                        class="carousel-control-next-icon"
+                        aria-hidden="true"
+                      ></span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- medium and larger -->
+        <div class="row row-demo-grid">
+          <div class="col-6 d-none d-md-block">
+            <div style="box-shadow: none" class="card">
+              <div
+                style="
+                  padding: 0px;
+                  display: flex;
+                  justify-content: space-around;
+                  background-color: rgb(249, 249, 249);
+                "
+                class="card-body"
+              >
+                <button
+                  style="
+                    height: 100px;
+                    width: 175px;
+                    border: #2e775a solid 1px;
+                    border-radius: 15px;
+                    display: flex;
+                    justify-content: space-between;
+                    background-color: #feff9f;
+                  "
+                  class="btn"
+                >
+                  <div style="width: 20%; height: 100%; align-content: center">
+                    <i class="flaticon-box-2 fa-3x"></i>
+                  </div>
+                  <div
+                    style="
+                      width: 70%;
+                      height: 100%;
+                      align-content: center;
+                      white-space: normal;
+                      font-size: 15px;
+                    "
+                  >
+                    <b> 20 Tenaga Pengajar </b>
+                  </div>
+                </button>
+                <button
+                  style="
+                    height: 100px;
+                    width: 175px;
+                    border: #2e775a solid 1px;
+                    border-radius: 15px;
+                    display: flex;
+                    justify-content: space-between;
+                    background-color: #feff9f;
+                  "
+                  class="btn"
+                >
+                  <div style="width: 20%; height: 100%; align-content: center">
+                    <i class="flaticon-box-2 fa-3x"></i>
+                  </div>
+                  <div
+                    style="
+                      width: 70%;
+                      height: 100%;
+                      align-content: center;
+                      white-space: normal;
+                      font-size: 15px;
+                    "
+                  >
+                    <b> 350 Siswa </b>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div class="card">
+              <!-- <div class="card-header" id="card-header-head-table-1">
+                <div class="card-title">
+                  <h1 style="color: rgb(133, 230, 121);"><b>Pengumuman</b></h1>
+                </div>
+              </div> -->
+              <!-- <div style="margin: 0px;" class="card-body"> -->
+              <table
+                style="width: 100%; text-align: left"
+                id="basic-datatables"
+                class="display table"
+              >
+                <thead>
+                  <tr>
+                    <th>
+                      <h2 style="text-align: left; color: #2e775a">
+                        <b>Pengumuman</b>
+                      </h2>
+                    </th>
+                    <th style="display: none">Tanggal</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {% for konten in konten_pengumuman %}
+                  <tr>
+                    <td>
+                      <a
+                        href="{{ url_for('home_blueprint.show_pengumuman', id_pengumuman=konten.id_pengumuman) }}"
+                      >
+                        <h3>{{ konten.judul_pengumuman }}</h3>
+                        <h5>({{ konten.tanggal }})</h5>
+                      </a>
+                    </td>
+                    <td style="display: none">
+                      <h5>({{ konten.tanggal }})</h5>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              <!-- </div> -->
+            </div>
+          </div>
+          <div class="col-6 d-none d-md-block">
+            <div style="background-color: #feff9f" class="card">
+              <div class="card-header" id="card-header-head-table-1">
+                <div
+                  style="text-align: center; color: #2e775a"
+                  class="card-title"
+                >
+                  <h4>
+                    <b
+                      >KALENDER AKADEMIK SEMESTER {{setting.semester}}
+                      {{setting.tahun_ajaran}}</b
+                    >
+                  </h4>
+                </div>
+
+                <table
+                  class="display table"
+                  id="basic-datatables-3"
+                  style="border: 1px solid black"
+                >
+                  <thead>
+                    <tr style="text-align: center">
+                      <th
+                        style="background-color: #2e775a; color: #feff9f"
+                        scope="col"
+                      >
+                        Agenda
+                      </th>
+                      <th
+                        style="background-color: #2e775a; color: #feff9f"
+                        scope="col"
+                      >
+                        Tanggal
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for kegiatan in kegiatan_akademik %}
+                    <tr>
+                      <td>{{kegiatan.Kegiatan}}</td>
+                      <td>
+                        {{kegiatan.Formatted_tanggal_mulai}} -
+                        {{kegiatan.Formatted_tanggal_selesai}}
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- smaller -->
+        <div class="d-block d-md-none">
+          <div class="card">
+            <!-- <div class="card-header" id="card-header-head-table-1">
+                  <div class="card-title">
+                    <h1 style="color: rgb(133, 230, 121);"><b>Pengumuman</b></h1>
+                  </div>
+                </div>
+                <div style="margin: 0px;" class="card-body"> -->
+            <table
+              style="width: 100%; text-align: left"
+              id="basic-datatables-2"
+              class="display table"
+            >
+              <thead>
+                <tr>
+                  <th><h3>Pengumuman</h3></th>
+                  <th style="display: none">Tanggal</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for konten in konten_pengumuman %}
+                <tr>
+                  <td>
+                    <a
+                      href="{{ url_for('home_blueprint.show_pengumuman', id_pengumuman=konten.id_pengumuman) }}"
+                    >
+                      <h3>{{ konten.judul_pengumuman }}</h3>
+                      <h5>({{ konten.tanggal }})</h5>
+                    </a>
+                  </td>
+                  <td style="display: none">
+                    <h5>({{ konten.tanggal }})</h5>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- </div> -->
+          </div>
+
+          <div class="card">
+            <div class="card-header" id="card-header-head-table-1">
+              <div style="text-align: center" class="card-title">
+                <h2><b>KALENDER AKADEMIK SEMESTER GANJIL 2024/2025</b></h2>
+              </div>
+            </div>
+            <div class="card-body">
+              <table class="table table-head-bg-success">
+                <thead>
+                  <tr style="text-align: center">
+                    <th scope="col">Kegiatan</th>
+                    <th scope="col">Tanggal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for kegiatan in kegiatan_akademik %}
+                  <tr>
+                    <td>{{kegiatan.Kegiatan}}</td>
+                    <td>
+                        {{kegiatan.Formatted_tanggal_mulai}} -
+                        {{kegiatan.Formatted_tanggal_selesai}}
+                      </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- guru -->
+
+        <div
+          style="box-shadow: none; background-color: rgb(249, 249, 249)"
+          class="card"
+        >
+          <div style="text-align: center; color: #2e775a" class="card-header">
+            <h3><b>DAFTAR GURU SDN BINTARA 2</b></h3>
+          </div>
+
+          <a href="{{ url_for('home_blueprint.show_guru') }}">
+            <div
+              style="
+                border-radius: 10px;
+                border: 1px solid #2e775a;
+                background-color: rgb(199, 245, 163);
+              "
+              class="card-body"
+            >
+              <div class="container">
+                <div class="menu-container pembungkus-guru">
+                  {% for guru in data_guru %}
+                  <div class="card-guru">
+                    <img
+                      class="img-card-guru"
+                      src="{{guru.image_path_guru}}"
+                      alt=""
+                      loading="lazy"
+                    />
+                    <span>{{guru.nama}}</span>
+                    <span>{{guru.kelas_ajar}}</span>
+                  </div>
+
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Acara Kegiatan-->
+        <div
+          style="box-shadow: none; background-color: rgb(249, 249, 249)"
+          class="card"
+        >
+          <div style="text-align: center; color: #2e775a" class="card-header">
+            <h2><b>KEGIATAN</b></h2>
+          </div>
+          <div class="card-body">
+            <div class="container">
+              <div class="menu-container pembungkus-acara">
+                {% for acara in data_acara %}
+                <div class="card-acara">
+                  <img
+                    class="img-card-acara"
+                    src="{{acara.img_path_kegiatan}}"
+                    alt=""
+                    loading="lazy"
+                  />
+                  <span>{{acara.nama_kegiatan}}</span>
+                  <span>{{acarakonten_kegiatan}}</span>
+                </div>
+
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="card">
+          <div style="text-align: center; color: #2e775a" class="card-header">
+            <h2><b>MAP SEKOLAH</b></h2>
+          </div>
+          <div class="card-body">
+            <a
+              href="https://www.google.com/maps/dir//Jl.+Bintara+12A,+RT.003%2FRW.009,+Bintara,+Kec.+Bekasi+Bar.,+Kota+Bks,+Jawa+Barat+17134/@-6.2313405,106.9607482,19.86z/data=!4m8!4m7!1m0!1m5!1m1!1s0x2e698c6172d44ecd:0x6c5e21d1dd4f121e!2m2!1d106.9611144!2d-6.2313277?entry=ttu&g_ep=EgoyMDI0MTAyOS4wIKXMDSoASAFQAw%3D%3D"
+            >
+              <div id="map" style="width: 100%; height: 400px"></div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endblock content %}
+
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+
+    <!-- Atlantis DEMO methods, don't include it in your project! -->
+    <!-- <script src="/static/assets/js/setting-demo2.js"></script> -->
+    
+    <script>
+    //Fungsi untuk animasi loading
+     window.addEventListener('load', function () {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+        });
+        
+ 
+    // Fungsi untuk mendapatkan hari dalam format string
+         // Daftar nama hari dan bulan dalam bahasa Indonesia
+        const hariIndonesia = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+        const bulanIndonesia = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+
+        // Fungsi untuk mendapatkan nama hari dalam bahasa Indonesia
+        function getDayString(dayNumber) {
+            return hariIndonesia[dayNumber];
+        }
+
+        // Fungsi untuk mendapatkan nama bulan dalam bahasa Indonesia
+        function getMonthString(monthNumber) {
+            return bulanIndonesia[monthNumber];
+        }
+
+        // Fungsi untuk memperbarui teks bergerak
+        function updateMovingText() {
+            const now = new Date();
+            const day = getDayString(now.getDay()); // Nama hari
+            const date = now.getDate().toString().padStart(2, '0'); // Tanggal dengan 2 digit
+            const month = getMonthString(now.getMonth()); // Nama bulan
+            const year = now.getFullYear(); // Tahun
+            const time = now.toLocaleTimeString(); // Format waktu (HH:mm:ss)
+            
+            const movingText = document.getElementById('movingText');
+            movingText.textContent = `Hari: ${day}, ${date} ${month} ${year} | Jam: ${time} - Selamat Datang Di Website SDN II Bintara Bekasi, Unggul Dalam Berprestasi, Beriman, Bertakwa, serta Berkarakter`;
+        }
+
+        // Perbarui teks setiap detik
+        setInterval(updateMovingText, 1000);
+
+        // Inisialisasi teks pertama kali
+        updateMovingText();
+        
+        
+      $(document).ready(function () {
+        $("#basic-datatables").DataTable({
+          pageLength: 3,
+          order: [[1, "desc"]],
+          lengthChange: false,
+          searching: false,
+        });
+
+        $("#basic-datatables-2").DataTable({
+          pageLength: 3,
+          order: [[1, "desc"]],
+          lengthChange: false,
+          searching: false,
+        });
+        
+        // Custom sorting for date range
+    $.fn.dataTable.ext.type.order['date-range-pre'] = function (data) {
+        // Extract the start date from "Tanggal_mulai - Tanggal_selesai"
+        let startDate = data.split(' - ')[0];
+        // Convert start date to a timestamp for sorting
+        return new Date(startDate).getTime();
+    };
+
+    $("#basic-datatables-3").DataTable({
+        pageLength: 4,
+        order: [[1, "asc"]], // Order by the second column (Tanggal)
+        columnDefs: [
+            {
+                type: "date-range", // Use the custom type defined above
+                targets: 1, // Apply sorting to the second column
+            },
+        ],
+        lengthChange: false,
+        searching: false,
+    });
+    
+    
+
+        // $("#basic-datatables-3").DataTable({
+        //   pageLength: 4,
+        //   order: [[1, "desc"]],
+        //   lengthChange: false,
+        //   searching: false,
+        // });
+
+        $("#multi-filter-select").DataTable({
+          pageLength: 5,
+          initComplete: function () {
+            this.api()
+              .columns()
+              .every(function () {
+                var column = this;
+                var select = $(
+                  '<select class="form-control"><option value=""></option></select>'
+                )
+                  .appendTo($(column.footer()).empty())
+                  .on("change", function () {
+                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                    column
+                      .search(val ? "^" + val + "$" : "", true, false)
+                      .draw();
+                  });
+
+                column
+                  .data()
+                  .unique()
+                  .sort()
+                  .each(function (d, j) {
+                    select.append(
+                      '<option value="' + d + '">' + d + "</option>"
+                    );
+                  });
+              });
+          },
+        });
+
+        // Add Row
+        $("#add-row").DataTable({
+          pageLength: 5,
+        });
+
+        // var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+
+        // $('#addRowButton').click(function() {
+        //     $('#add-row').dataTable().fnAddData([
+        //         $("#nama_siswa").val(),
+        //         $("#nis").val(),
+        //         $("#id_kelas").val(),
+        //         action
+        //         ]);
+        //     $('#addRowModal').modal('hide');
+
+        // });
+      });
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <script>
+      // Inisialisasi peta
+      var map = L.map("map").setView([-6.231379, 106.961241], 18); // posisi dan zoom awal (Jakarta)
+
+      // Tambahkan tile layer dari OpenStreetMap
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 25,
+        attribution: "© OpenStreetMap contributors",
+      }).addTo(map);
+
+      // Menambahkan marker (opsional)
+      L.marker([-6.231379, 106.961241])
+        .addTo(map)
+        .bindPopup("SDN BINTARA II BEKASI")
+        .openPopup();
+    </script>
+
+    {% endblock javascripts %}
+  </body>
+</html>

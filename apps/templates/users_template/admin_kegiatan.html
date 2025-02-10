@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Data Kegiatan</title>
+</head>
+<body>
+
+
+    {% extends "layouts/base.html" %}
+
+    {% block title %} UI Datatables {% endblock %} 
+    
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}{% endblock stylesheets %}
+    
+    {% block content %}
+    
+
+
+        <div class="content">
+            <div class="page-inner">
+                <div class="page-header">
+                    
+                </div>
+                <div class="col-md-12">
+
+                    <div class="card">
+                        <div class="card-header" id="card-header-head-table-1">
+                          <h4 style="text-align: center;" class="card-title">
+                            <b>MODIFIKASI DATA KEGIATAN</b> 
+                          </h4>
+                          <div class="d-flex align-items-center">
+                            <button class="btn btn-primary btn-round ml-auto" data-toggle="tooltip" >
+                              <a style="text-decoration: none;color: aliceblue;" href="{{ url_for('home_blueprint.admin_tambah_kegiatan')}}">
+                                <i class="fa fa-plus"></i>
+                                Tambah Kegiatan
+                              </a>
+                            </button>
+                        
+                        </div>
+                        </div>
+                        <div class="card-body">
+                           
+                            <table id="basic-datatables" class="display table">
+                                <thead>
+                                  <tr>
+                                    <th> <h3>Judul Kegiatan</th></h3>
+                                    <th >Tanggal</th>
+                                    <th >Aksi</th>
+                                  </tr>
+                                </thead>
+                    
+                                <tbody>
+                                  {% for kegiatan in data_kegiatan %}
+                                  <tr>
+                                    <td>
+                                   
+                                    <h3>{{ kegiatan.nama_kegiatan }}</h3>
+                                    
+                             
+                             
+                                </td>
+                                <td >
+                                    <h5>({{ kegiatan.tanggal_kegiatan }})</h5>
+                                </td>
+                                <td >
+                                    <div class="form-button-action">
+                                      <a href="{{ url_for('home_blueprint.admin_edit_kegiatan', id_kegiatan=kegiatan.id_kegiatan) }}">
+                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">      
+                                                <i class="fa fa-edit"></i>
+                                        </button>
+                                    </a>
+
+                                     <!-- DELETE DATA -->
+                                  
+                                     <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger alert_demo_7" data-original-title="Remove" data-kegiatan-id="{{ kegiatan.id_kegiatan }}" >
+                                      <i class="fa fa-times"></i>
+                                  </button>
+
+                                          <form id="delete-form-{{ kegiatan.id_kegiatan }}" action="{{ url_for('home_blueprint.admin_delete_kegiatan', id_kegiatan = kegiatan.id_kegiatan) }}" method="post" style="display: none;">
+                                              <!-- You can add a CSRF token here if needed -->
+                                              <input type="hidden" name="_method" value="DELETE">
+                                          </form>
+                                     
+                                                </div>
+                                       
+                                      
+
+                                </td>
+                                
+                                  </tr>
+                                  {% endfor %}
+                                </tbody>
+                              </table>
+                     
+                    </div>
+                    </div>
+
+                   
+
+
+      
+        </div>
+    </div>
+      
+</div>
+    
+    {% endblock content %}
+    
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+    
+    <script>
+        $(document).ready(function () {
+          $("#basic-datatables").DataTable({ pageLength: 3,order: [[1, 'desc']],});
+  
+          $("#multi-filter-select").DataTable({
+            pageLength: 5,
+            initComplete: function () {
+              this.api()
+                .columns()
+                .every(function () {
+                  var column = this;
+                  var select = $(
+                    '<select class="form-control"><option value=""></option></select>'
+                  )
+                    .appendTo($(column.footer()).empty())
+                    .on("change", function () {
+                      var val = $.fn.dataTable.util.escapeRegex($(this).val());
+  
+                      column
+                        .search(val ? "^" + val + "$" : "", true, false)
+                        .draw();
+                    });
+  
+                  column
+                    .data()
+                    .unique()
+                    .sort()
+                    .each(function (d, j) {
+                      select.append(
+                        '<option value="' + d + '">' + d + "</option>"
+                      );
+                    });
+                });
+            },
+          });
+        });
+
+           //== Class definition
+    var SweetAlert2Demo = function() {
+        var initDemos = function() {
+           
+
+            $(document).on('click', '.alert_demo_7', function(e) {
+            e.preventDefault();
+            var kegiatanId = $(this).data('kegiatan-id'); // Get the siswa ID from the button
+            var formId = '#delete-form-' + kegiatanId; 
+            
+            
+                swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    buttons:{
+                        confirm: {
+                            text : 'Yes, delete it!',
+                            className : 'btn btn-success'
+                        },
+                        cancel: {
+                            visible: true,
+                            className: 'btn btn-danger'
+                        }
+                    }
+                }).then((Delete) => {
+                    if (Delete) {
+                        $(formId).submit();
+                        swal({
+                            title: 'Deleted!',
+                            text: 'Your file has been deleted.',
+                            type: 'success',
+                            buttons : {
+                                confirm: {
+                                    className : 'btn btn-success'
+                                }
+                            }
+                        });
+                    } else {
+                        swal.close();
+                    }
+                });
+            })
+
+            
+        };
+
+         
+        return {
+            //== Init
+            init: function() {
+                initDemos();
+            },
+        };
+    }();
+
+        //== Class Initialization
+        jQuery(document).ready(function() {
+        SweetAlert2Demo.init();
+    });
+
+    
+      </script>
+    {% endblock javascripts %}
+    
+</body>
+</html>

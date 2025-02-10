@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Biodata Guru</title>
+  </head>
+  <body>
+    {% extends "layouts/base.html" %} {% block title %} UI Datatables {%
+    endblock %}
+
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}{% endblock stylesheets %} {% block content %}
+
+    <div class="content">
+      <div class="page-inner">
+        <div class="page-header"><h1>TAMBAH DATA Guru</h1></div>
+
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="header-info">
+                <h2>BIODATA GURU</h2>
+              </div>
+
+          
+            <div class="row">
+
+              <div style="width:100%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;" >
+                <div class="">
+                  <img width="200px" src="{{data_guru.image_path_guru}}" alt="">
+                </div>
+              </div>
+
+           
+            
+                    <div class="col-sm-12">
+                        <div class="form-group form-group-default">
+                            <label>Nama:</label>
+                            <p>{{ data_guru.nama }}</p>
+                        </div>
+                    </div>
+            
+                    <div class="col-sm-12">
+                        <div class="form-group form-group-default">
+                            <label>NIP:</label>
+                            <p>{{ data_guru.nip }}</p>
+                        </div>
+                    </div>
+            
+                    <div class="col-md-4 pr-0">
+                        <div class="form-group form-group-default">
+                            <label>Jenis Kelamin:</label>
+                            <p>{{ data_guru.jk }}</p>
+                        </div>
+                    </div>
+            
+                    <div class="col-md-4 pr-0">
+                        <div class="form-group form-group-default">
+                            <label>Tempat Lahir:</label>
+                            <p>{{ data_guru.tempat_lahir }}</p>
+                        </div>
+                    </div>
+            
+                    <div class="col-md-4 pr-0">
+                        <div class="form-group form-group-default">
+                            <label>Tanggal Lahir:</label>
+                            <p>{{ data_guru.tanggal_lahir }}</p>
+                        </div>
+                    </div>
+            
+                    <div class="col-sm-12">
+                        <div class="form-group form-group-default">
+                            <label>Agama:</label>
+                            <p>{{ data_guru.agama }}</p>
+                        </div>
+                    </div>
+            
+                    <div class="col-md-6 pr-0">
+                        <div class="form-group form-group-default">
+                            <label>Status:</label>
+                            <p>{{ data_guru.status }}</p>
+                        </div>
+                    </div>
+            
+                    <div class="col-md-6 pr-0">
+                        <div class="form-group form-group-default">
+                            <label>Golongan:</label>
+                            <p>{{ data_guru.golongan }}</p>
+                        </div>
+                    </div>
+            
+                    <div class="col-md-6 pr-0">
+                        <div class="form-group form-group-default">
+                            <label>Status Pernikahan:</label>
+                            <p>{{ data_guru.status_perkawinan }}</p>
+                        </div>
+                    </div>
+            
+                    <div class="col-md-6 pr-0">
+                        <div class="form-group form-group-default">
+                            <label>Jumlah Anak:</label>
+                            <p>{{ data_guru.jml_anak }}</p>
+                        </div>
+                    </div>
+            
+                    <div class="col-sm-12">
+                        <div class="form-group form-group-default">
+                            <label>Masa Kerja (Tahun):</label>
+                            <p>{{ data_guru.masa_kerja_thn }}</p>
+                        </div>
+                    </div>
+            
+                    <div class="col-sm-12">
+                        <div class="form-group form-group-default">
+                            <label>Masa Kerja (Bulan):</label>
+                            <p>{{ data_guru.masa_kerja_bln }}</p>
+                        </div>
+                    </div>
+            
+                    <div class="col-sm-12">
+                        <div class="form-group form-group-default">
+                            <label>Tahun Tamat SD:</label>
+                            <p>{{ data_guru.tmt_sd }}</p>
+                        </div>
+                    </div>
+            
+                    <div class="col-sm-12">
+                        <div class="form-group form-group-default">
+                            <label>Pendidikan:</label>
+                            <p>{{ data_guru.pendidikan }}</p>
+                        </div>
+                    </div>
+            
+                    <div class="col-sm-12">
+                        <div class="form-group form-group-default">
+                            <label>Jurusan:</label>
+                            <p>{{ data_guru.jurusan }}</p>
+                        </div>
+                    </div>
+            
+                    <div class="col-sm-12">
+                        <div class="form-group form-group-default">
+                            <label>Tahun Lulus Pendidikan Tinggi:</label>
+                            <p>{{ data_guru.lulus }}</p>
+                        </div>
+                    </div>
+            
+                    <div class="col-sm-12">
+                        <div class="form-group form-group-default">
+                            <label>Jabatan:</label>
+                            <p>{{ data_guru.kelas_ajar }}</p>
+                        </div>
+                    </div>
+            
+                    <div class="col-sm-12">
+                        <div class="form-group form-group-default">
+                            <label>Jam/Minggu:</label>
+                            <p>{{ data_guru.jam_week }}</p>
+                        </div>
+                    </div>
+            
+                </div>
+            
+             
+
+
+            </div>
+
+         
+            </form>
+    
+
+
+
+
+<!--           
+            <button type="button" data-toggle="tooltip" title="" class="btn btn-secondary alert_demo_7" data-original-title="Tambah"  >
+              <span class="btn-label">
+                <i class="fa fa-plus"></i>
+              </span>
+              Submit
+          </button>
+        -->
+         
+          
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+
+
+    {% endblock content %}
+
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+    <script src="//cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>
+
+    <script>
+      // Initialize CKEditor
+      CKEDITOR.replace("editor");
+
+
+
+
+      //== Class definition
+    var SweetAlert2Demo = function() {
+        var initDemos = function() {
+            $(document).on('click', '.alert_demo_7', function(e) {
+            e.preventDefault();
+            var formId = '#tambah_siswa' ; 
+            
+            
+                swal({
+                    title: 'Apakah data sudah benar?',
+                    text: "jika belum, silakan ulangi",
+                    type: 'warning',
+                    buttons:{
+                        confirm: {
+                            text : 'Ya, data sudah benar',
+                            className : 'btn btn-success'
+                        },
+                        cancel: {
+                          text : 'Kembali',
+                            visible: true,
+                            className: 'btn btn-danger'
+                        }
+                    }
+                }).then((Add) => {
+                    if (Add) {
+                        $(formId).submit();
+                        swal({
+                            title: 'Data Ditambahkan',
+                            text: 'Data siswa telah ditambahkan.',
+                            type: 'success',
+                            buttons : {
+                                confirm: {
+                                    className : 'btn btn-success'
+                                }
+                            }
+                        });
+                    } else {
+                        swal.close();
+                    }
+                });
+            })
+        };
+
+         
+        return {
+            //== Init
+            init: function() {
+                initDemos();
+            },
+        };
+    }();
+    
+    //== Class Initialization
+    jQuery(document).ready(function() {
+        SweetAlert2Demo.init();
+    });
+    </script>
+
+    {% endblock javascripts %}
+  </body>
+</html>

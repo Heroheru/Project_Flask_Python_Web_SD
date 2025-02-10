@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student</title>
+    
+</head>
+<body>
+
+
+    {% extends "layouts/base.html" %}
+
+    {% block title %} UI Datatables {% endblock %} 
+    
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}
+    
+    <style>
+      
+    </style>
+    {% endblock stylesheets %}
+    
+    {% block content %}
+    
+
+
+        <div class="content">
+            <div class="page-inner">
+                <div class="page-header">
+                   
+                </div>
+                <div class="col-md-12">
+                    <div style="padding: 20px;" class="card">
+                        <div  class="card-header"> 
+                            <h4 style="text-align: center;"><b>PROFIL SDN BINTARA 2 KOTA BEKASI</b></h4></div>
+                        {% for profil in data_profil%}
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>Nama Sekolah</label>
+                                    <p>{{profil.nama_sklh}}</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>NIS</label>
+                                   <p>{{profil.nis}}</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>NSS</label>
+                                    <p>{{profil.nss}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 pr-0">
+                                <div class="form-group form-group-default">
+                                    <label>Propinsi</label>
+                                   <p>{{profil.provinsi}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 pr-0">
+                                <div class="form-group form-group-default">
+                                    <label>Otonomi</label>
+                                    <p>{{profil.otonomi}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 pr-0">
+                                <div class="form-group form-group-default">
+                                    <label>Kecamatan</label>
+                                    <p>{{profil.kecamatan}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 pr-0">
+                                <div class="form-group form-group-default">
+                                    <label>Desa/Kelurahan</label>
+                                    <p>{{profil.desa_kelurahan}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 pr-0">
+                                <div class="form-group form-group-default">
+                                    <label>jalan</label>
+                                    <p>{{profil.jln_no}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 pr-0">
+                                <div class="form-group form-group-default">
+                                    <label>kode pos</label>
+                                    <p>{{profil.kode_pos}}</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>Telephone</label>
+                                    <p>{{profil.telepon}}</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>Faximile</label>
+                                    <p>{{profil.faximile}}</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>Daerah</label>
+                                    <p>{{profil.daerah}}</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>Status Sekolah</label>
+                                    <p>{{profil.status_sklh}}</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>Kelompok Sekolah</label>
+                                    <p>{{profil.kelompok_sklh}}</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>Akreditasi</label>
+                                    <p>{{profil.akreditasi}}</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>Surat Keputusan SK</label>
+                                    <p>{{profil.surat_keputusan_sk}}</p>
+                                </div>
+                            </div>
+                       
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>Tanggal SK</label>
+                                    <p>{{ profil.tanggal_sk }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>Penerbit SK</label>
+                                    <p>{{ profil.penerbit_sk }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>Tahun Berdiri</label>
+                                    <p>{{ profil.thn_berdiri }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>Tahun Perubahan</label>
+                                    <p>{{ profil.thn_perubahan }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>Kegiatan Belajar Mengajar</label>
+                                    <p>{{ profil.kegiatan_bljr_mengajar }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>Bangunan Sekolah</label>
+                                    <p>{{ profil.bangunan_sklh }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>Luas Bangunan (M2)</label>
+                                    <p>{{ profil.luas_bangunan }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>Lokasi Sekolah</label>
+                                    <p>{{ profil.lokasi_sklh }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>Jarak ke Kecamatan</label>
+                                    <p>{{ profil.jarak_kecamatan }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>Jarak ke Otoda</label>
+                                    <p>{{ profil.jarak_otoda }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>Terletak pada Lintasan</label>
+                                    <p>{{ profil.terletak_pd_lintasan }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>Jumlah Keanggotaan Gugus</label>
+                                    <p>{{ profil.jmlh_keanggotaan_gugus }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>Organisasi Penyelenggara</label>
+                                    <p>{{ profil.organisasi_penyelenggara }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-12">
+                                <div class="form-group form-group-default">
+                                    <label>Perjalanan Perubahan Sekolah</label>
+                                    <p>{{ profil.perjalanan_perubahan_sklh }}</p>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        {%endfor%}
+            </div>
+        </div>
+
+
+        
+    </div>
+
+
+    
+
+
+      
+</div>
+    
+    {% endblock content %}
+    
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+    
+       
+    {% endblock javascripts %}
+    
+</body>
+</html>

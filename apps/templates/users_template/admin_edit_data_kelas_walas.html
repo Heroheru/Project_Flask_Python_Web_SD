@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Data Kelas</title>
+</head>
+<body>
+
+
+    {% extends "layouts/base.html" %}
+
+    {% block title %} UI Datatables {% endblock %} 
+    
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}{% endblock stylesheets %}
+    
+    {% block content %}
+    
+
+
+        <div class="content">
+            <div class="page-inner">
+                <div class="page-header">
+                    
+                </div>
+             
+                    <div class="col-md-12">
+
+                        <div class="card">
+                            <div class="card-header" id="card-header-head-table-1">
+                                <div style="text-align: center; margin-top: 20px; " class="card-title">
+                                <h2><b>MODIFIKASI DATA KELAS</b></h2>
+                                <div class="d-flex align-items-center">
+                                    <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
+                                        <i class="fa fa-plus"></i>
+                                        Tambah Kelas
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                            <div class="card-body">
+                                  <!--Add Modal -->
+                                  <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header no-bd">
+                                                <h5 class="modal-title">
+                                                    <span class="fw-mediumbold">
+                                                    Tambah</span> 
+                                                    <span class="fw-light">
+                                                       Kelas
+                                                    </span>
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p class="small">Create a new row using this form, make sure you fill them all</p>
+                                                <form method="POST" action="{{ url_for('home_blueprint.tambah_kelas') }}">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="form-group form-group-default">
+                                                                <label>Nama Kelas</label>
+                                                                <input id="nama_kelas" type="text" class="form-control" placeholder="isi_kelas" name="nama_kelas" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12 ">
+                                                            <div class="form-group form-group-default">
+                                                                <label>Nama Wali Kelas</label>
+                                                                <select id="id_wali_kelas" name="id_wali_kelas" class="form-control"  required>
+                                                                    <option value="" disabled selected >Pilih Guru</option>
+                                                                    {%for guru in data_guru%}
+                                                                    <option value="{{guru.id_guru}}">{{guru.nama}}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                            
+                                                            </div>
+                                                        </div>
+                                                      
+                                                    </div>
+                                            </div>
+                                            <div class="modal-footer no-bd">
+                                                <button type="submit" id="addRowButton" class="btn btn-primary">Tambah</button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+                                            </div>
+                                        </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <table class="table table-head-bg-success">
+                                    <thead>
+                                        <tr style="text-align: center;">
+                                            <th scope="col">Nama Kelas</th>
+                                            <th scope="col">Wali Kelas</th>
+                                            <th scope="col">Action</th>
+                                         
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for kls in kelas %}
+                                        <tr>
+                                            <td>{{kls.nama_kelas}}</td>
+                                            <td>{{kls.for_walas.nama}} </td>
+                                            <td>
+                                                <div class="form-button-action">
+                                                <button type="button" data-toggle="modal" data-target="#editRowModal{{ kls.id_kelas }}" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                                                        <i class="fa fa-edit"></i>                                             
+                                                </button>
+
+                                                <!-- delete -->
+
+                                                <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger alert_demo_7" data-original-title="Remove" data-kelas-id="{{ kls.id_kelas}}">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+
+                                                <form id="delete-form-{{kls.id_kelas}}" action="{{ url_for('home_blueprint.delete_kelas', kelas_id=kls.id_kelas) }}" method="post" style="display: none;">
+                                                    <!-- You can add a CSRF token here if needed -->
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                </form>
+
+
+                                               
+                                                </div>
+
+                                             <!--Edit Modal -->
+                                                <div class="modal fade" id="editRowModal{{kls.id_kelas }}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header no-bd">
+                                                                <h5 class="modal-title">
+                                                                    <span class="fw-mediumbold">
+                                                                    Edit</span> 
+                                                                    <span class="fw-light">
+                                                                        Kelas
+                                                                    </span>
+                                                                </h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p class="small">Create a new row using this form, make sure you fill them all</p>
+                                                                <form method="POST" action="{{ url_for('home_blueprint.update_kelas', kelas_id= kls.id_kelas) }}">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12">
+                                                                            <div class="form-group form-group-default">
+                                                                                <label>Nama Kelas</label>
+                                                                                <input id="nama_kelas" type="text" class="form-control" placeholder="fill name" name="nama_kelas" value="{{kls.nama_kelas}}" required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-12">
+                                                                            <div class="form-group form-group-default">
+                                                                                <label>Nama Wali Kelas</label>
+                                                                                <select id="id_wali_kelas" name="id_wali_kelas" class="form-control"  required>
+                                                                                    <option value="{{kls.id_wali_kelas}}" >{{kls.for_walas.nama}}</option>
+                                                                                    {%for guru in data_guru%}
+                                                                                    <option value="{{guru.id_guru}}">{{guru.nama}}</option>
+                                                                                    {% endfor %}
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                      
+                                                                   
+                                                                    </div>
+                                                            </div>
+                                                            <div class="modal-footer no-bd">
+                                                                <button type="submit" id=EditRowButton" class="btn btn-primary">Edit</button>
+                                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+                                                            </div>
+                                                        </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                              
+                            </div>
+                        </div>
+                 
+
+
+                   
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    
+    {% endblock content %}
+    
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+    
+        <!-- Atlantis DEMO methods, don't include it in your project! -->
+        <!-- <script src="/static/assets/js/setting-demo2.js"></script> -->
+        <script >
+        //    Class definition
+    var SweetAlert2Demo = function() {
+        var initDemos = function() {
+            $(document).on('click', '.alert_demo_7', function(e) {
+            e.preventDefault();
+            var kelasId = $(this).data('kelas-id'); // Get the siswa ID from the button
+            var formId = '#delete-form-' +kelasId; 
+          
+            
+            
+                swal({
+                    title: 'Are you sure? to delete ',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    buttons:{
+                        confirm: {
+                            text : 'Yes, delete it!',
+                            className : 'btn btn-success'
+                        },
+                        cancel: {
+                            visible: true,
+                            className: 'btn btn-danger'
+                        }
+                    }
+                }).then((Delete) => {
+                    if (Delete) {
+                        $(formId).submit();
+                        swal({
+                            title: 'Deleted!',
+                            text: 'Your file has been deleted.',
+                            type: 'success',
+                            buttons : {
+                                confirm: {
+                                    className : 'btn btn-success'
+                                }
+                            }
+                        });
+                    } else {
+                        swal.close();
+                    }
+                });
+            })
+        };
+
+         
+        return {
+            //== Init
+            init: function() {
+                initDemos();
+            },
+        };
+    }();
+    
+    //== Class Initialization
+    jQuery(document).ready(function() {
+        SweetAlert2Demo.init();
+    });
+        </script>
+    
+    {% endblock javascripts %}
+    
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Siswa Baru</title>
+  </head>
+  <body>
+    {% extends "layouts/base.html" %} {% block title %} UI Datatables {%
+    endblock %}
+
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}
+    <style>
+       #input_form_button {
+        background-color: rgb(91, 116, 255); width: 100px; height: 30px; border: none; border-radius: 2px;
+        transition: transform 0.3s ease;
+        color: white;
+        font-weight: bold;
+        margin-left: 15px;
+      }
+
+      #input_form_button:hover {
+        transform: scale(1.1);
+      }
+    </style>{% endblock stylesheets %} {% block content %}
+
+    <div class="content">
+      <div class="page-inner">
+        <div class="page-header"><h1>TAMBAH DATA Siswa</h1></div>
+
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="header-info">
+                <h2>DATA SISWA BARU/h2>
+              </div>
+          <form id="update_siswa" method="POST" action="{{ url_for('home_blueprint.update_siswa_baru', siswa_id= data_siswa.id_siswa_baru) }}" enctype="multipart/form-data">
+           
+              <div class="row">
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                      <label>Nomor Identitas</label>
+                      <input id="nis" type="text" class="form-control" placeholder="fill nis" name="nomor_identitas" value="{{data_siswa.nomor_identitas}}" >
+                  </div>
+              </div>
+
+           
+
+           
+
+                <div class="col-sm-12">
+                    <div class="form-group form-group-default">
+                        <label>Nama Siswa Baru</label>
+                        <input id="nama_siswa" type="text" class="form-control" placeholder="fill name" name="nama_siswa_baru"  value="{{data_siswa.nama_siswa_baru}}" required>
+                    </div>
+                </div>
+
+                
+</div>
+
+         
+                   
+
+        <input id="input_form_button" type="submit" value="Update" >
+           
+</form>
+
+
+         
+          
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+
+
+    {% endblock content %}
+
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+    <script src="//cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>
+
+    <script>
+      // Initialize CKEditor
+      CKEDITOR.replace("editor");
+
+
+
+
+      //== Class definition
+    var SweetAlert2Demo = function() {
+        var initDemos = function() {
+            $(document).on('click', '.alert_demo_7', function(e) {
+            e.preventDefault();
+            var formId = '#tambah_siswa' ; 
+            
+            
+                swal({
+                    title: 'Apakah data sudah benar?',
+                    text: "jika belum, silakan ulangi",
+                    type: 'warning',
+                    buttons:{
+                        confirm: {
+                            text : 'Ya, data sudah benar',
+                            className : 'btn btn-success'
+                        },
+                        cancel: {
+                          text : 'Kembali',
+                            visible: true,
+                            className: 'btn btn-danger'
+                        }
+                    }
+                }).then((Add) => {
+                    if (Add) {
+                        $(formId).submit();
+                        swal({
+                            title: 'Data Ditambahkan',
+                            text: 'Data siswa telah ditambahkan.',
+                            type: 'success',
+                            buttons : {
+                                confirm: {
+                                    className : 'btn btn-success'
+                                }
+                            }
+                        });
+                    } else {
+                        swal.close();
+                    }
+                });
+            })
+        };
+
+         
+        return {
+            //== Init
+            init: function() {
+                initDemos();
+            },
+        };
+    }();
+    
+    //== Class Initialization
+    jQuery(document).ready(function() {
+        SweetAlert2Demo.init();
+    });
+    </script>
+
+    {% endblock javascripts %}
+  </body>
+</html>

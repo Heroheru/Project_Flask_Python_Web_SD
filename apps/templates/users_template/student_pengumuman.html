@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student</title>
+</head>
+<body>
+
+
+    {% extends "layouts/base.html" %}
+
+    {% block title %} UI Datatables {% endblock %} 
+    
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}
+    <style>
+        img {
+        width: 100%;
+        height: auto;
+        max-width: 400px;
+    }
+    @media (max-width: 768px) { /* Contoh ukuran untuk layar tablet atau hp */
+    img {
+        width: 50%;
+        max-width: 50%; /* Pastikan tidak melebihi lebar kontainer */
+    }
+}
+
+    </style>
+    
+
+    
+    {% endblock stylesheets %}
+    
+    {% block content %}
+    
+
+
+        <div class="content">
+            <div class="page-inner">
+                <div class="page-header">
+                    
+                </div>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Data Pengumuman</h4>
+                            <div class="d-flex align-items-center ">
+                          
+                            </div>
+                        </div>           
+                        <div class="card-body">                         
+                                <div style="text-align: center; font-weight: bolder;"><h2>{{konten_pengumuman.judul_pengumuman}}</h2></div>                    
+                                <div style="display: flex; justify-content: center;align-items: center;">
+                                    <div style="display: flex; justify-content: center;align-items: center;" class="card">
+                                    <img src="{{konten_pengumuman.image_path}}" alt="">
+                                </div>
+                                </div>
+                                <div>{{konten_pengumuman.tanggal}}</div>
+                                <div><h4>{{konten_pengumuman.isi | safe}}</h4></div>                  
+                        </div>
+            </div>
+        </div>
+    </div>
+      
+</div>
+    
+    {% endblock content %}
+    
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+    
+       
+    {% endblock javascripts %}
+    
+</body>
+</html>

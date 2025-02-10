@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tambah Siswa</title>
+  </head>
+  <body>
+    {% extends "layouts/base.html" %} {% block title %} UI Datatables {%
+    endblock %}
+
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}
+    <style>
+      #input_form_button {
+        background-color: rgb(91, 116, 255); width: 100px; height: 30px; border: none; border-radius: 2px;
+        transition: transform 0.3s ease;
+        color: white;
+        font-weight: bold;
+      }
+
+      #input_form_button:hover {
+        transform: scale(1.1);
+      }
+    </style>
+    {% endblock stylesheets %} {% block content %}
+
+    <div class="content">
+      <div class="page-inner">
+
+        <div class="page-header"><h1>TAMBAH DATA SISWA</h1></div>
+     
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="header-info">
+                <h2>BIODATA SISWA</h2>
+              </div>
+          <form id="tambah_siswa" method="POST" action="{{ url_for('home_blueprint.tambah_siswa') }}" enctype="multipart/form-data">
+           
+              <div class="row">
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                      <label>Nis</label>
+                      <input id="nis" type="text" class="form-control" placeholder="fill nis" name="nis" required>
+                  </div>
+              </div>
+
+              <div class="col-md-4 pr-0">
+                <div class="form-group form-group-default">
+                    <label>Nipd</label>
+                    <input id="nis" type="text" class="form-control" placeholder="fill nipd" name="nipd" required>
+                </div>
+            </div>
+
+            <div class="col-md-4 pr-0">
+              <div class="form-group form-group-default">
+                  <label>Nik</label>
+                  <input id="nis" type="text" class="form-control" placeholder="fill nik" name="nik" required>
+              </div>
+          </div>
+
+                <div class="col-sm-12">
+                    <div class="form-group form-group-default">
+                        <label>Nama Siswa</label>
+                        <input id="nama_siswa" type="text" class="form-control" placeholder="fill name" name="nama_siswa" required>
+                    </div>
+                </div>
+
+                <div class="col-md-6 pr-0">
+                  <div class="form-group form-group-default">
+                      <label>Tempat Lahir</label>
+                      <input id="tempat_lahir" type="text" class="form-control" placeholder="fill tempat lahir" name="tempat_lahir" required>
+                  </div>
+              </div>
+
+              <div class="col-md-6 pr-0">
+                <div class="form-group form-group-default">
+                    <label>Tanggal Lahir</label>
+                    <input id="tanggal_lahir" type="date" class="form-control" placeholder="fill tanggal lahir" name="tanggal_lahir" required>
+                </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                      <label>Jenis Kelamin</label>
+                      <select id="id_kelas" name="jenis_kelamin" class="form-control"  required>
+                        <option value="" disabled selected>Jenis Kelamin</option>
+                        <option value="L">Laki-laki</option>
+                        <option value="P">Perempuan</option>
+                    </select>
+                  </div>
+              </div>
+               
+                <div class="col-sm-12">
+                    <div class="form-group form-group-default">
+                        <label>Kelas</label> 
+                        <select id="id_kelas" name="id_kelas" class="form-control"  required>
+                            <option value="" disabled selected>Pilih Kelas</option>
+                            {% for kelas in data_kelas %}
+                            <option value="{{kelas.id_kelas}}">{{kelas.nama_kelas}}</option>
+                           
+                          {%endfor%}
+                        </select>
+                        
+                        <!-- <input id="id_kelas" type="text" class="form-control" placeholder="fill kelas" name="id_kelas" required> -->
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="agama">Agama:</label>
+                <select id="agama" name="agama" class="form-control"  required>
+                  <option value="" disabled selected>Pilih Agama</option>
+                  <option value="Islam">Islam</option>
+                  <option value="Kristen">Kristen</option>
+                  <option value="Katolik">Katolik</option>
+                  <option value="Hindu">Hindu</option>
+                  <option value="Buddha">Buddha</option>
+                  <option value="Khonghucu">Khonghucu</option>
+              </select>
+              
+                </div>
+              </div>
+            
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="alamat">Alamat:</label>
+                <input type="text" class="form-control" id="alamat" name="alamat" maxlength="256">
+             </div>
+            </div>
+
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="rt">RT:</label>
+                <input class="form-control" type="text" id="rt" name="rt" maxlength="3">
+             </div>
+            </div>
+
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="rw">RW:</label>
+                <input class="form-control" type="text" id="rw" name="rw" maxlength="3">
+             </div>
+            </div>
+
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="dusun">Dusun:</label>
+                <input class="form-control" type="text" id="dusun" name="dusun" maxlength="64">
+             </div>
+            </div>
+
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="kelurahan">Kelurahan:</label>
+                <input class="form-control" type="text" id="kelurahan" name="kelurahan" maxlength="64">
+             </div>
+            </div>
+
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="kecamatan">Kecamatan:</label>
+                <input class="form-control" type="text" id="kecamatan" name="kecamatan" maxlength="64">
+             </div>
+            </div>
+
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="kode_pos">Kode Pos:</label>
+                <input class="form-control" type="text" id="kode_pos" name="kode_pos" maxlength="16">
+             </div>
+            </div>
+
+                <div class="col-md-6 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="jenis_tinggal">Jenis Tinggal:</label>
+                <input class="form-control" type="text" id="jenis_tinggal" name="jenis_tinggal" maxlength="64" >
+             </div>
+            </div>
+
+                <div class="col-md-6 pr-0">
+                  <div class="form-group form-group-default">
+          
+                <label for="alat_transportasi">Alat Transportasi:</label>
+                <input class="form-control" type="text" id="alat_transportasi" name="alat_transportasi" maxlength="64">
+ </div>
+</div>
+
+                <div class="col-md-6 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="no_hp">No HP:</label>
+                <input class="form-control" type="tel" id="no_hp" name="no_hp" maxlength="32">
+             </div>
+            </div>
+
+                <div class="col-md-6 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="email">Email:</label>
+                <input class="form-control" type="email" id="email" name="email" maxlength="128">
+              </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="skhun">SKHUN:</label>
+                <input class="form-control" type="text" id="skhun" name="skhun" maxlength="128">
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="penerima_kps">Penerima KPS:</label>
+                <input  class="form-control" type="text" id="penerima_kps" name="penerima_kps" maxlength="32">
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="no_kps">No KPS:</label>
+                <input class="form-control" type="text" id="no_kps" name="no_kps" maxlength="128">
+             </div>
+            </div>
+            
+            <div style="margin-left: 13px;" class="header-info">
+              <h2>BIODATA AYAH</h2>
+            </div>
+
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="nama_ayah">Nama Ayah:</label>
+                <input  class="form-control" type="text" id="nama_ayah" name="nama_ayah" maxlength="128">
+             </div>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="form-group form-group-default">
+            <label for="TLA">Tahun Lahir Ayah:</label>
+            <input  class="form-control" type="number" id="TLA" name="tahun_lahir_ayah">
+         </div>
+        </div>
+
+        <div class="col-sm-12">
+          <div class="form-group form-group-default">
+        <label for="pekerjaan_ayah">Pekerjaan Ayah:</label>
+        <input  class="form-control" type="text" id="pekerjaan_ayah" name="pekerjaan_ayah" maxlength="50">
+     </div>
+    </div>
+
+
+    <div class="col-sm-12">
+      <div class="form-group form-group-default">
+    <label for="pendidikan_ayah"> jenjang pendidikan ayah:</label>
+    <select id="pendidikan_ayah" name="jenjang_pendidikan_ayah" class="form-control" >
+      <option value="" >isi jenjang pendidikan ayah</option>
+      <option value="Tidak Sekolah">Tidak Sekolah</option>
+      <option value="SD / sederajat">SD / sederajat</option>
+      <option value="SMP / sederajat">SMP / sederajat</option>
+      <option value="SMA / sederajat">SMA / sederajat</option>
+      <option value="D1">D1</option>
+      <option value="D2">D2</option>
+      <option value="D3">D3</option>
+      <option value="D4">D4</option>
+      <option value="S1">S1</option>
+      <option value="S2">S2</option>
+      <option value="S3">S3</option>
+  </select>
+ </div>
+</div>
+
+
+
+
+    <div class="col-sm-12">
+      <div class="form-group form-group-default">
+    <label for="penghasilan_ayah">Penghasilan Ayah:</label>
+    <select id="penghasilan_ayah" name="penghasilan_ayah" class="form-control" >
+      <option value="" >Isi Penghasilan Ayah</option>
+      <option value="Tidak Berpenghasilan">Tidak Berpenghasilan</option>
+      <option value="Di bawah Rp.500,000">Di bawah Rp.500,000</option>
+      <option value="Rp.500,000 - Rp.999,999">Rp.500,000 - Rp.999,999</option>
+      <option value="Rp.1,000,000 - Rp.1,999,999">Rp.1,000,000 - Rp.1,999,999</option>
+      <option value="Rp.2,000,000 - Rp.4,999,999">Rp.2,000,000 - Rp.4,999,999</option>
+      <option value="Rp.5,000,000 - Rp.20,000,000">Rp.5,000,000 - Rp.20,000,000</option>
+      <option value="di atas Rp.20,000,000">di atas Rp.20,000,000</option>
+  </select>
+ </div>
+</div>
+
+<div class="col-sm-12">
+  <div class="form-group form-group-default">
+<label for="nik_ayah">Nik Ayah:</label>
+<input  class="form-control" type="text" id="nik_ayah" name="nik_ayah"  >
+</div>
+</div>
+
+
+            <div  style="margin-left: 13px;"  class="header-info">
+              <h2>BIODATA IBU</h2>
+            </div>
+
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="nama_ibu">Nama Ibu:</label>
+                <input class="form-control" type="text" id="nama_ibu" name="nama_ibu" maxlength="128">
+             </div>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="form-group form-group-default">
+            <label for="TLB">Tahun Lahir Ibu:</label>
+            <input  class="form-control" type="number" id="TLB" name="tahun_lahir_ibu" >
+         </div>
+        </div>
+
+        <div class="col-sm-12">
+          <div class="form-group form-group-default">
+        <label for="pekerjaan_ibu">Pekerjaan Ibu:</label>
+        <input  class="form-control" type="text" id="pekerjaan_ibu" name="pekerjaan_ibu" maxlength="50">
+     </div>
+    </div>
+
+    <div class="col-sm-12">
+      <div class="form-group form-group-default">
+    <label for="pendidikan_ibu"> jenjang pendidikan ibu:</label>
+    <select id="pendidikan_ibu" name="jenjang_pendidikan_ibu" class="form-control" >
+      <option value="" >isi jenjang pendidikan ibu</option>
+      <option value="Tidak Sekolah">Tidak Sekolah</option>
+      <option value="SD / sederajat">SD / sederajat</option>
+      <option value="SMP / sederajat">SMP / sederajat</option>
+      <option value="SMA / sederajat">SMA / sederajat</option>
+      <option value="D1">D1</option>
+      <option value="D2">D2</option>
+      <option value="D3">D3</option>
+      <option value="D4">D4</option>
+      <option value="S1">S1</option>
+      <option value="S2">S2</option>
+      <option value="S3">S3</option>
+  </select>
+ </div>
+</div>
+
+
+    <div class="col-sm-12">
+      <div class="form-group form-group-default">
+    <label for="penghasilan_ibu">Penghasilan Ibu:</label>
+    <select id="penghasilan_ibu" name="penghasilan_ibu" class="form-control" >
+      <option value="">Isi Penghasilan ibu</option>
+      <option value="Tidak Berpenghasilan">Tidak Berpenghasilan</option>
+      <option value="Di bawah Rp.500,000">Di bawah Rp.500,000</option>
+      <option value="Rp.500,000 - Rp.999,999">Rp.500,000 - Rp.999,999</option>
+      <option value="Rp.1,000,000 - Rp.1,999,999">Rp.1,000,000 - Rp.1,999,999</option>
+      <option value="Rp.2,000,000 - Rp.4,999,999">Rp.2,000,000 - Rp.4,999,999</option>
+      <option value="Rp.5,000,000 - Rp.20,000,000">Rp.5,000,000 - Rp.20,000,000</option>
+      <option value="di atas Rp.20,000,000">di atas Rp.20,000,000</option>
+  </select>
+ </div>
+</div>
+
+<div class="col-sm-12">
+  <div class="form-group form-group-default">
+<label for="nik_ibu">Nik Ibu:</label>
+<input  class="form-control" type="text" id="nik_ibu" name="nik_ibu"  >
+</div>
+</div>
+
+
+            <div  style="margin-left: 13px;"  class="header-info">
+              <h2>BIODATA WALI</h2>
+            </div>
+
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="nama_wali">Nama Wali:</label>
+                <input class="form-control" type="text" id="nama_wali" name="nama_wali" maxlength="128">
+             </div>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="form-group form-group-default">
+            <label for="TLW">Tahun Lahir Wali:</label>
+            <input  class="form-control" type="number" id="TLW" name="tahun_lahir_wali" >
+         </div>
+        </div>
+
+        <div class="col-sm-12">
+          <div class="form-group form-group-default">
+        <label for="pekerjaan_wali">Pekerjaan Wali:</label>
+        <input  class="form-control" type="text" id="pekerjaan_wali" name="pekerjaan_wali" maxlength="50">
+     </div>
+    </div>
+
+    <div class="col-sm-12">
+      <div class="form-group form-group-default">
+    <label for="pendidikan_wali"> jenjang pendidikan wali:</label>
+    <select id="penghasilan_wali" name="jenjang_pendidikan_wali" class="form-control" >
+      <option value="" >isi jenjang pendidikan wali</option>
+      <option value="Tidak Sekolah">Tidak Sekolah</option>
+      <option value="SD / sederajat">SD / sederajat</option>
+      <option value="SMP / sederajat">SMP / sederajat</option>
+      <option value="SMA / sederajat">SMA / sederajat</option>
+      <option value="D1">D1</option>
+      <option value="D2">D2</option>
+      <option value="D3">D3</option>
+      <option value="D4">D4</option>
+      <option value="S1">S1</option>
+      <option value="S2">S2</option>
+      <option value="S3">S3</option>
+  </select>
+ </div>
+</div>
+
+
+    <div class="col-sm-12">
+      <div class="form-group form-group-default">
+    <label for="penghasilan_wali">Penghasilan wali:</label>
+    <select id="penghasilan_wali" name="penghasilan_wali" class="form-control"  >
+      <option value="" >Isi Penghasilan wali</option>
+      <option value="Tidak Berpenghasilan">Tidak Berpenghasilan</option>
+      <option value="Di bawah Rp.500,000">Di bawah Rp.500,000</option>
+      <option value="Rp.500,000 - Rp.999,999">Rp.500,000 - Rp.999,999</option>
+      <option value="Rp.1,000,000 - Rp.1,999,999">Rp.1,000,000 - Rp.1,999,999</option>
+      <option value="Rp.2,000,000 - Rp.4,999,999">Rp.2,000,000 - Rp.4,999,999</option>
+      <option value="Rp.5,000,000 - Rp.20,000,000">Rp.5,000,000 - Rp.20,000,000</option>
+      <option value="di atas Rp.20,000,000">di atas Rp.20,000,000</option>
+  </select>
+ </div>
+</div>
+
+<div class="col-sm-12">
+  <div class="form-group form-group-default">
+<label for="nik_wali">Nik wali:</label>
+<input  class="form-control" type="text" id="nik_wali" name="nik_wali"  >
+</div>
+</div>
+
+
+
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="no_peserta_ujian_nasional">No Peserta Ujian Nasional:</label>
+                <input class="form-control" type="text" id="no_peserta_ujian_nasional" name="no_peserta_ujian_nasional" maxlength="128">
+             </div>
+ </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="no_seri_ijazah">No Seri Ijazah:</label>
+                <input class="form-control" type="text" id="no_seri_ijazah" name="no_seri_ijazah" maxlength="128">
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="penerima_kip">Penerima KIP:</label>
+                <input class="form-control" type="text" id="penerima_kip" name="penerima_kip" maxlength="32">
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="nomor_kip">Nomor KIP:</label>
+                <input class="form-control" type="text" id="nomor_kip" name="nomor_kip" maxlength="128">
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="nama_kip">Nama KIP:</label>
+                <input class="form-control" type="text" id="nama_kip" name="nama_kip" maxlength="128">
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="nomor_kks">Nomor KKS:</label>
+                <input class="form-control" type="text" id="nomor_kks" name="nomor_kks" maxlength="128">
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="noreg_akta_lahir">No Reg Akta Lahir:</label>
+                <input class="form-control" type="text" id="noreg_akta_lahir" name="noreg_akta_lahir" maxlength="128">
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="bank">Bank:</label>
+                <input class="form-control" type="text" id="bank" name="bank" maxlength="64">
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="no_rek_bank">No Rek Bank:</label>
+                <input class="form-control" type="text" id="no_rek_bank" name="no_rek_bank" maxlength="64">
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="nama_rek_bank">Nama Rek Bank:</label>
+                <input class="form-control" type="text" id="nama_rek_bank" name="nama_rek_bank" maxlength="128">
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="layak_pip">Layak PIP:</label>
+                <input class="form-control" type="text" id="layak_pip" name="layak_pip" maxlength="32">
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="alasan_layak_pip">Alasan Layak PIP:</label>
+                <input class="form-control" type="text" id="alasan_layak_pip" name="alasan_layak_pip" maxlength="128">
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="kebutuhan_khusus">Kebutuhan Khusus:</label>
+                <input class="form-control" type="text" id="kebutuhan_khusus" name="kebutuhan_khusus" maxlength="64">
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="sekolah_asal">Sekolah Asal:</label>
+                <input class="form-control" type="text" id="sekolah_asal" name="sekolah_asal" maxlength="128">
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="anak_ke">Anak Ke:</label>
+                <input class="form-control" type="number" id="anak_ke" name="anak_ke" min="1" max="99">
+             </div>
+            </div>
+
+                <div class="col-md-6 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="lintang">Lintang:</label>
+                <input class="form-control" type="number" id="lintang" name="lintang" step="0.000001">
+             </div>
+            </div>
+
+                <div class="col-md-6 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="bujur">Bujur:</label>
+                <input class="form-control" type="number" id="bujur" name="bujur" step="0.000001">
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="no_kk">No KK:</label>
+                <input class="form-control" type="text" id="no_kk" name="no_kk" maxlength="128">
+             </div>
+            </div>
+
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="berat_badan">Berat Badan (kg):</label>
+                <input class="form-control" type="number" id="berat_badan" name="berat_badan" min="0" max="300" step="0.1">
+             </div>
+            </div>
+
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="tinggi_badan">Tinggi Badan (cm):</label>
+                <input class="form-control" type="number" id="tinggi_badan" name="tinggi_badan" min="0" max="300" step="0.1">
+             </div>
+            </div>
+
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="lingkar_kepala">Lingkar Kepala (cm):</label>
+                <input class="form-control" type="number" id="lingkar_kepala" name="lingkar_kepala" min="0" max="100" step="0.1">
+ </div>
+</div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="jml_saudara">Jumlah Saudara:</label>
+                <input class="form-control" type="number" id="jml_saudara" name="jml_saudara" min="0" max="99">
+ </div>
+</div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="jarak">Jarak Rumah Ke Sekolah</label>
+                <input class="form-control" type="number" id="jarak" name="jarak_rumah_sekolah" min="0" max="99">
+ </div>
+</div>
+</div>
+
+
+    
+
+        <input id="input_form_button"  type="submit" >
+           
+</form>
+
+
+<!--           
+            <button type="button" data-toggle="tooltip" title="" class="btn btn-secondary alert_demo_7" data-original-title="Tambah"  >
+              <span class="btn-label">
+                <i class="fa fa-plus"></i>
+              </span>
+              Submit
+          </button>
+        -->
+         
+          
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+
+
+    {% endblock content %}
+
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+    <script src="//cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>
+
+    <script>
+      // Initialize CKEditor
+      CKEDITOR.replace("editor");
+
+
+
+
+      //== Class definition
+    var SweetAlert2Demo = function() {
+        var initDemos = function() {
+            $(document).on('click', '.alert_demo_7', function(e) {
+            e.preventDefault();
+            var formId = '#tambah_siswa' ; 
+            
+            
+                swal({
+                    title: 'Apakah data sudah benar?',
+                    text: "jika belum, silakan ulangi",
+                    type: 'warning',
+                    buttons:{
+                        confirm: {
+                            text : 'Ya, data sudah benar',
+                            className : 'btn btn-success'
+                        },
+                        cancel: {
+                          text : 'Kembali',
+                            visible: true,
+                            className: 'btn btn-danger'
+                        }
+                    }
+                }).then((Add) => {
+                    if (Add) {
+                        $(formId).submit();
+                        swal({
+                            title: 'Data Ditambahkan',
+                            text: 'Data siswa telah ditambahkan.',
+                            type: 'success',
+                            buttons : {
+                                confirm: {
+                                    className : 'btn btn-success'
+                                }
+                            }
+                        });
+                    } else {
+                        swal.close();
+                    }
+                });
+            })
+        };
+
+         
+        return {
+            //== Init
+            init: function() {
+                initDemos();
+            },
+        };
+    }();
+    
+    //== Class Initialization
+    jQuery(document).ready(function() {
+        SweetAlert2Demo.init();
+    });
+    </script>
+
+    {% endblock javascripts %}
+  </body>
+</html>

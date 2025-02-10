@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student</title>
+    
+</head>
+<body>
+
+
+    {% extends "layouts/base.html" %}
+
+    {% block title %} UI Datatables {% endblock %} 
+    
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}
+    
+    <style>
+        .grid-container-acara {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .card_acara {
+            flex: 1 1 calc(25% - 20px); /* Mengatur 4 card per baris */
+            max-width: calc(25% - 20px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            background-color: #fff;
+            font-size: small ;
+        }
+        
+        .card_acara img {
+            width: 100%;
+            height: auto; /* Memastikan tinggi gambar mengikuti proporsi */
+            max-height: 200px; /* Membatasi tinggi gambar agar tidak terlalu besar */
+            object-fit: cover; 
+            
+        }
+        
+        .card-informasi {
+            padding: 10px;
+            background-color: rgb(226, 255, 223) ;
+            height: 100%;
+        }
+        
+        /* Responsif untuk layar kecil */
+        @media (max-width: 768px) {
+            .card_acara{
+                flex: 1 1 calc(50% - 20px); /* 2 card per baris untuk layar lebih kecil */
+                font-size: small;
+            }
+
+            
+        }
+
+        @media (max-width: 480px) {
+            .card_acara {
+                flex: 1 1 calc(50% - 20px); /* 1 card per baris untuk layar sangat kecil */
+                max-width: 100%;
+                font-size: small;
+            }
+        }
+    </style>
+    {% endblock stylesheets %}
+    
+    {% block content %}
+    
+
+
+        <div class="content">
+            <div class="page-inner">
+                <div class="page-header">
+                  
+                </div>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 style="text-align: center;" class="card-title"><b>DAFTAR KEGIATAN SD BINTARA II</b></h4>
+                        </div>
+                    <div class="grid-container-acara">
+                    <!-- Contoh data guru -->
+                    {%for acara in data_acara%}
+                    <div class="card_acara" data-toggle="modal" data-target="#showRowModal{{ acara.id_kegiatan}}" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+                        <img src="{{acara.img_path_kegiatan}}" alt="Foto kegiatan">
+                        <div class="card-informasi">
+                            <p>{{acara.nama_kegiatan}}</p>
+                            <p>{{acara.tanggal_kegiatan}}</p>
+                        </div>
+
+                        <div class="modal fade" id="showRowModal{{ acara.id_kegiatan }}" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header no-bd">
+                                        <h5 class="modal-title">
+                                            <span class="fw-mediumbold">
+                                            ACARA</span> 
+                                            <span class="fw-light">
+                                               SEKOLAH
+                                            </span>
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="">
+                                                        <img style="width: 200px;  margin-bottom: 20px;" src="{{acara.img_path_kegiatan}}" alt="Foto Guru">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="form-group form-group-default">
+                                                        <label>Nama Kegiatan</label>
+                                                        <p>{{acara.nama_kegiatan}}</p>
+                                                      
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="form-group form-group-default">
+                                                      
+                                                        <p>{{ acara.konten_kegiatan | safe }}</p>
+                                                    </div>
+                                                </div>
+                    
+                                                <div class="col-sm-12">
+                                                    <div class="form-group form-group-default">
+                                                       
+                                                        <p>{{acara.tanggal_kegiatan}}</p>
+                                                    </div>
+                                                </div>
+                    
+                      
+                                            </div>
+                                    </div>
+                                    <div class="modal-footer no-bd">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                            
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    {%endfor%}
+                    
+                    <!-- Tambahkan lebih banyak card sesuai jumlah data guru -->
+                </div>
+            </div>
+        </div>
+
+
+           
+                           
+                    
+
+        
+    </div>
+
+
+    
+
+
+      
+</div>
+    
+    {% endblock content %}
+    
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+    
+       
+    {% endblock javascripts %}
+    
+</body>
+</html>

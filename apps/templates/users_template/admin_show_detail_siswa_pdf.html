@@ -1,0 +1,141 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biodata Siswa</title>
+    <style>
+     table {
+        width: 80%; /* Sesuaikan lebar tabel */
+        margin: 20px auto; /* Tabel di tengah */
+        border-collapse: collapse; /* Hapus ruang antar border */
+        box-sizing: border-box; /* Pastikan padding tidak menambah ukuran elemen */
+    }
+
+      th, td {
+         border: 1px solid black; /* Garis tepi */
+        padding-top: 2px; /* Padding dalam tabel */
+        
+        text-align: left; /* Rata kiri */
+        font-size: 15px;
+        vertical-align: top; /* Rata atas */
+        
+        
+      }
+      
+    
+            th {
+        background-color: #f2f2f2;
+      }
+            h1 {
+        text-align: center;
+        margin-top: 30px;
+      }
+      
+      @page {
+    size: A4;
+    margin: 15mm 10mm;
+}
+   * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box; /* Menghindari penambahan padding atau border */
+    }
+
+
+
+    </style>
+</head>
+<body>
+    <h1>BIODATA SISWA</h1>
+    <table>
+        <tr>
+            <th>Nama</th>
+            <td>{{ siswa.nama }}</td>
+        </tr>
+        <tr><th>NISN</th><td>{{ siswa.nisn }}</td></tr>
+        <tr><th>NIPD</th><td>{{ siswa.nipd }}</td></tr>
+        <tr><th>NIK</th><td>{{ siswa.nik }}</td></tr>
+        <tr><th>Tempat Lahir</th><td>{{ siswa.tempat_lahir }}</td></tr>
+        <tr><th>Tanggal Lahir</th><td>{{ siswa.tanggal_lahir }}</td></tr>
+        <tr><th>Jenis Kelamin</th><td>{{ siswa.jk }}</td></tr>
+        <tr><th>Kelas</th><td>{{ siswa.for_kelas.nama_kelas }}</td></tr>
+        <tr><th>Agama</th><td>{{ siswa.agama }}</td></tr>
+        <tr><th>Alamat</th><td>{{ siswa.alamat }}</td></tr>
+        <tr><th>RT</th><td>{{ siswa.rt }}</td></tr>
+        <tr><th>RW</th><td>{{ siswa.rw }}</td></tr>
+        <tr><th>Dusun</th><td>{{ siswa.dusun }}</td></tr>
+        <tr><th>Kelurahan</th><td>{{ siswa.kelurahan }}</td></tr>
+        <tr><th>Kecamatan</th><td>{{ siswa.kecamatan }}</td></tr>
+        <tr><th>Kode Pos</th><td>{{ siswa.kode_pos }}</td></tr>
+        <tr><th>Jenis Tinggal</th><td>{{ siswa.jenis_tinggal }}</td></tr>
+        <tr><th>Alat Transportasi</th><td>{{ siswa.alat_transportasi }}</td></tr>
+        <tr><th>No HP</th><td>{{ siswa.no_hp }}</td></tr>
+        <tr><th>Email</th><td>{{ siswa.email }}</td></tr>
+        <tr><th>SKHUN</th><td>{{ siswa.skhun }}</td></tr>
+        <tr><th>Penerima KPS</th><td>{{ siswa.penerima_kps }}</td></tr>
+        <tr><th>No KPS</th><td>{{ siswa.no_kps }}</td></tr>
+    </table>
+
+    <h1>BIODATA AYAH</h1>
+    <table>
+        <tr><th>Nama Ayah</th><td>{{ siswa.nama_ayah }}</td></tr>
+        <tr><th>Tahun Lahir Ayah</th><td>{{ siswa.tahun_lahir_ayah }}</td></tr>
+        <tr><th>Pekerjaan Ayah</th><td>{{ siswa.pekerjaan_ayah }}</td></tr>
+        <tr><th>Penghasilan Ayah</th><td>{{ siswa.penghasilan_ayah }}</td></tr>
+        <tr><th>Jenjang Pendidikan Ayah</th><td>{{ siswa.jenjang_pendidikan_ayah }}</td></tr>
+        <tr><th>NIK Ayah</th><td>{{ siswa.nik_ayah }}</td></tr>
+    </table>
+
+    <h1>BIODATA IBU</h1>
+    <table>
+        <tr><th>Nama Ibu</th><td>{{ siswa.nama_ibu }}</td></tr>
+        <tr><th>Tahun Lahir Ibu</th><td>{{ siswa.tahun_lahir_ibu }}</td></tr>
+        <tr><th>Pekerjaan Ibu</th><td>{{ siswa.pekerjaan_ibu }}</td></tr>
+        <tr><th>Penghasilan Ibu</th><td>{{ siswa.penghasilan_ibu }}</td></tr>
+        <tr><th>Jenjang Pendidikan Ibu</th><td>{{ siswa.jenjang_pendidikan_ibu }}</td></tr>
+        <tr><th>NIK Ibu</th><td>{{ siswa.nik_ibu }}</td></tr>
+    </table>
+
+    <h1>BIODATA WALI</h1>
+    <table>
+        <tr><th>Nama Wali</th><td>{{ siswa.nama_wali }}</td></tr>
+        <tr><th>Tahun Lahir Wali</th><td>{{ siswa.tahun_lahir_wali }}</td></tr>
+        <tr><th>Pekerjaan Wali</th><td>{{ siswa.pekerjaan_wali }}</td></tr>
+        <tr><th>Penghasilan Wali</th><td>{{ siswa.penghasilan_wali }}</td></tr>
+        <tr><th>Jenjang Pendidikan Wali</th><td>{{ siswa.jenjang_pendidikan_wali }}</td></tr>
+        <tr><th>NIK Wali</th><td>{{ siswa.nik_wali }}</td></tr>
+    </table>
+
+    <h1>Biodata Siswa (Lainnya)</h1>
+    <table>
+        <tr><th>No Peserta Ujian Nasional</th><td>{{ siswa.no_peserta_ujian_nasional }}</td></tr>
+        <tr><th>No Seri Ijazah</th><td>{{ siswa.no_seri_ijazah }}</td></tr>
+        <tr><th>Penerima KIP</th><td>{{ siswa.penerima_kip }}</td></tr>
+        <tr><th>Nomor KIP</th><td>{{ siswa.nomor_kip }}</td></tr>
+        <tr><th>Nama KIP</th><td>{{ siswa.nama_kip }}</td></tr>
+        <tr><th>Nomor KKS</th><td>{{ siswa.nomor_kks }}</td></tr>
+        <tr><th>No Reg Akta Lahir</th><td>{{ siswa.noreg_akta_lahir }}</td></tr>
+        <tr><th>Bank</th><td>{{ siswa.bank }}</td></tr>
+        <tr><th>No Rek Bank</th><td>{{ siswa.no_rek_bank }}</td></tr>
+        <tr><th>Nama Rek Bank</th><td>{{ siswa.nama_rek_bank }}</td></tr>
+        <tr><th>Layak PIP</th><td>{{ siswa.layak_pip }}</td></tr>
+        <tr><th>Alasan Layak PIP</th><td>{{ siswa.alasan_layak_pip }}</td></tr>
+        <tr><th>Kebutuhan Khusus</th><td>{{ siswa.kebutuhan_khusus }}</td></tr>
+        <tr><th>Sekolah Asal</th><td>{{ siswa.sekolah_asal }}</td></tr>
+        <tr><th>Anak ke</th><td>{{ siswa.anak_ke }}</td></tr>
+        <tr><th>Lintang</th><td>{{ siswa.lintang }}</td></tr>
+        <tr><th>Bujur</th><td>{{ siswa.bujur }}</td></tr>
+        <tr><th>No KK</th><td>{{ siswa.no_kk }}</td></tr>
+        <tr><th>Berat Badan</th><td>{{ siswa.berat_badan }}</td></tr>
+        <tr><th>Tinggi Badan</th><td>{{ siswa.tinggi_badan }}</td></tr>
+        <tr><th>Lingkar Kepala</th><td>{{ siswa.lingkar_kepala }}</td></tr>
+        <tr><th>Jumlah Saudara</th><td>{{ siswa.jml_saudara }}</td></tr>
+        <tr><th>Jarak Rumah ke Sekolah</th><td>{{ siswa.jarak_rumah_sekolah }}</td></tr>
+    </table>
+</body>
+</html>
+

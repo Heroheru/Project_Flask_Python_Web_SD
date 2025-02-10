@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Data Pengumuman</title>
+  </head>
+  <body>
+    {% extends "layouts/base.html" %} {% block title %} UI Datatables {%
+    endblock %}
+
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}{% endblock stylesheets %} {% block content %}
+
+    <div class="content">
+      <div class="page-inner">
+        <div class="page-header"><h1>EDIT DATA PENGUMUMAN</h1></div>
+
+        <div class="col-md-12">
+          <form id="edit_pengumuman" method="POST" action="{{ url_for('home_blueprint.admin_edit_pengumuman', id_pengumuman=konten_pengumuman.id_pengumuman)}}" enctype="multipart/form-data">
+            <div class="card">
+              <div class="card-header"><h2> Judul Pengumuman</h2></div>
+              <div class="card-body">
+                <!-- Textarea yang akan diubah menjadi TinyMCE editor -->
+                <textarea style="width: 100%;" name="judul_pengumuman"  id="judul"  required>{{konten_pengumuman.judul_pengumuman}}</textarea>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-body">
+                <div class="card-header"><h2> Masukkan Isi</h2></div>
+                  <textarea  name="content_pengumuman" id="editor" required>{{konten_pengumuman.isi}}</textarea>
+
+
+              </div>
+            </div>
+
+            
+            <div class="card">
+              <div class="card-body">
+                <div class="card-header"><h2> Masukkan Gambar (jika ada)</h2></div>
+                  <input style="width: 100%;" type="file" class="form-control-file" id="exampleFormControlFile1" name="gambar">
+
+              </div>
+            </div>
+
+
+          
+
+        
+</form> 
+            <br /><br />
+
+            <!-- <input type="submit" value="Submit" /> -->
+            <button type="button" data-toggle="tooltip" title="" class="btn btn-secondary alert_demo_7" data-original-title="Remove"  >
+              <span class="btn-label">
+                <i class="fa fa-plus"></i>
+              </span>
+              Submit
+          </button>
+
+         
+          
+        </div>
+      </div>
+    </div>
+
+    {% endblock content %}
+
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+    <script src="//cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>
+
+    <script>
+      // Initialize CKEditor
+      CKEDITOR.replace("editor");
+
+
+
+
+      //== Class definition
+    var SweetAlert2Demo = function() {
+        var initDemos = function() {
+            $(document).on('click', '.alert_demo_7', function(e) {
+            e.preventDefault();
+            var formId = '#edit_pengumuman' ; 
+            
+            
+                swal({
+                    title: 'Apakah data sudah benar?',
+                    text: "jika belum, silakan ulangi",
+                    type: 'warning',
+                    buttons:{
+                        confirm: {
+                            text : 'Ya, data sudah benar',
+                            className : 'btn btn-success'
+                        },
+                        cancel: {
+                          text : 'Kembali',
+                            visible: true,
+                            className: 'btn btn-danger'
+                        }
+                    }
+                }).then((edit) => {
+                    if (edit) {
+                        $(formId).submit();
+                        swal({
+                            title: 'Data Ditambahkan',
+                            text: 'Data pengumuman telah ditambahkan.',
+                            type: 'success',
+                            buttons : {
+                                confirm: {
+                                    className : 'btn btn-success'
+                                }
+                            }
+                        });
+                    } else {
+                        swal.close();
+                    }
+                });
+            })
+        };
+
+         
+        return {
+            //== Init
+            init: function() {
+                initDemos();
+            },
+        };
+    }();
+    
+    //== Class Initialization
+    jQuery(document).ready(function() {
+        SweetAlert2Demo.init();
+    });
+    </script>
+
+    {% endblock javascripts %}
+  </body>
+</html>

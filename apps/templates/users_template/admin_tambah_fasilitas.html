@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tambah Fasilitas</title>
+  </head>
+  <body>
+    {% extends "layouts/base.html" %} {% block title %} UI Datatables {%
+    endblock %}
+
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}{% endblock stylesheets %} {% block content %}
+
+    <div class="content">
+      <div class="page-inner">
+        <div class="page-header"><h1>TAMBAH DATA FASILITAS</h1></div>
+
+        <div class="col-md-12">
+          <form id="tambah_fasilitas" method="POST" action="{{ url_for('home_blueprint.admin_tambah_fasilitas') }}" enctype="multipart/form-data">
+            <div class="card">
+              <div class="card-header"><h2> Nama Fasilitas</h2></div>
+              <div class="card-body">
+                <!-- Textarea yang akan diubah menjadi TinyMCE editor -->
+             <input style="width: 100%;" type="text" class="form-control" name="nama_fasilitas" placeholder="isi nama fasilitas"> 
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-body">
+                <div class="card-header"><h2> Masukkan Gambar</h2></div>
+                 <input type="file" class="form-control-file" id="exampleFormControlFile1"  name="gambar_fasilitas" placeholder="masukkan gambar">
+
+
+              </div>
+            </div>
+
+         
+
+        
+</form> 
+            <br /><br />
+
+            <!-- <input type="submit" value="Submit" /> -->
+            <button type="button" data-toggle="tooltip" title="" class="btn btn-secondary alert_demo_7" data-original-title="add"  >
+              <span class="btn-label">
+                <i class="fa fa-plus"></i>
+              </span>
+              Submit
+          </button>
+
+         
+          
+        </div>
+      </div>
+    </div>
+
+    {% endblock content %}
+
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+    <script src="//cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>
+
+    <script>
+      // Initialize CKEditor
+      CKEDITOR.replace("editor");
+
+
+
+
+      //== Class definition
+    var SweetAlert2Demo = function() {
+        var initDemos = function() {
+            $(document).on('click', '.alert_demo_7', function(e) {
+            e.preventDefault();
+            var formId = '#tambah_fasilitas' ; 
+            
+            
+                swal({
+                    title: 'Apakah data sudah benar?',
+                    text: "jika belum, silakan ulangi",
+                    type: 'warning',
+                    buttons:{
+                        confirm: {
+                            text : 'Ya, data sudah benar',
+                            className : 'btn btn-success'
+                        },
+                        cancel: {
+                          text : 'Kembali',
+                            visible: true,
+                            className: 'btn btn-danger'
+                        }
+                    }
+                }).then((Add) => {
+                    if (Add) {
+                        $(formId).submit();
+                        swal({
+                            title: 'Data Ditambahkan',
+                            text: 'Data kegiatan telah ditambahkan.',
+                            type: 'success',
+                            buttons : {
+                                confirm: {
+                                    className : 'btn btn-success'
+                                }
+                            }
+                        });
+                    } else {
+                        swal.close();
+                    }
+                });
+            })
+        };
+
+         
+        return {
+            //== Init
+            init: function() {
+                initDemos();
+            },
+        };
+    }();
+    
+    //== Class Initialization
+    jQuery(document).ready(function() {
+        SweetAlert2Demo.init();
+    });
+    </script>
+
+    {% endblock javascripts %}
+  </body>
+</html>

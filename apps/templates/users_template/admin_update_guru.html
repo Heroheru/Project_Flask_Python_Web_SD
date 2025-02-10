@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Guru</title>
+  </head>
+  <body>
+    {% extends "layouts/base.html" %} {% block title %} UI Datatables {%
+    endblock %}
+
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}
+    <style>
+      #input_form_button {
+        background-color: rgb(91, 116, 255); width: 100px; height: 30px; border: none; border-radius: 2px;
+        transition: transform 0.3s ease;
+        color: white;
+        font-weight: bold;
+      }
+
+      #input_form_button:hover {
+        transform: scale(1.1);
+      }
+    </style> 
+    {% endblock stylesheets %} {% block content %}
+
+    <div class="content">
+      <div class="page-inner">
+        <div class="page-header"><h1>TAMBAH DATA Guru</h1></div>
+
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="header-info">
+                <h2>BIODATA GURU</h2>
+              </div>
+
+          <form id="update_guru" method="POST" action="{{ url_for('home_blueprint.admin_update_data_guru', guru_id = data_guru.id_guru)}}" enctype="multipart/form-data">
+            <div class="row">
+
+              <div style="width:100%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;" >
+                <div class="">
+                  <img width="200px" src="{{data_guru.image_path_guru}}" alt="">
+                </div>
+              </div>
+
+            <div class="col-sm-12">
+              <div class="form-group form-group-default">
+                <label for="nama">Nama:</label>
+                <input type="text" id="nama" name="nama" class="form-control" value="{{data_guru.nama}}" required>
+              </div>
+            </div>
+            
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="nip">NIP:</label>
+                <input type="text" id="nip" name="nip" class="form-control"value="{{data_guru.nip}}"  required>
+              </div>
+            </div>
+            
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                <label>Jenis Kelamin</label>
+                      <select id="jk" name="jk" class="form-control"  >
+                        <option value="{{data_guru.jk}}" >{{data_guru.jk}}</option>
+                        <option value="L">Laki-laki</option>
+                        <option value="P">Perempuan</option>
+                    </select>
+                  </div>
+                </div>
+
+                    <div class="col-md-4 pr-0">
+                      <div class="form-group form-group-default">
+                <label for="tempat_lahir">Tempat Lahir:</label>
+                <input type="text" id="tempat_lahir" name="tempat_lahir" class="form-control" value="{{data_guru.tempat_lahir}}">
+                   </div>
+                  </div>
+            
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="tanggal_lahir">Tanggal Lahir:</label>
+                <input type="date" id="tanggal_lahir" name="tanggal_lahir" value="{{data_guru.tanggal_lahir}}" class="form-control">
+              </div>
+            </div>
+           
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="agama">Agama:</label>
+                <select id="agama" name="agama" class="form-control"  >
+                  <option value="{{data_guru.agama}}">{{data_guru.agama}}</option>
+                  <option value="Islam">Islam</option>
+                  <option value="Kristen">Kristen</option>
+                  <option value="Katolik">Katolik</option>
+                  <option value="Hindu">Hindu</option>
+                  <option value="Buddha">Buddha</option>
+                  <option value="Khonghucu">Khonghucu</option>
+              </select>
+            </div>
+          </div>
+              
+            
+              
+              <div class="col-md-6 pr-0">
+                <div class="form-group form-group-default">
+                <label for="status">Status:</label>
+                <select id="status" name="status" class="form-control" >
+                  <option value="{{data_guru.status}}">{{data_guru.status}}</option>
+                  <option value="PNS">PNS</option>
+                  <option value="NON-PNS Tetap">NON-PNS Tetap</option>
+              </select>
+            </div>
+          </div>
+            
+            
+              <div class="col-md-6 pr-0">
+                <div class="form-group form-group-default">
+                <label for="golongan">Golongan:</label>
+                <input type="text" id="golongan" name="golongan" value="{{data_guru.golongan}}" class="form-control">
+              </div>
+            </div>
+               
+            
+                <div class="col-md-6 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="status_perkawinan">Status Pernikahan:</label>
+                <select id="status" name="status_perkawinan" class="form-control"  >
+                  <option value="{{data_guru.status_perkawinan}}">{{data_guru.status_perkawinan}}</option>
+                  <option value="Menikah">Menikah</option>
+                  <option value="Belum Menikah">Belum Menikah</option>
+                  <option value="Cerai Hidup">Cerai Hidup</option>
+                  <option value="Cerai Mati">Cerai Mati</option>
+              </select>
+            </div>
+          </div>
+               
+              <div class="col-md-6 pr-0">
+                <div class="form-group form-group-default">
+                <label for="jml_anak">Jumlah Anak:</label>
+                <input type="text" id="jml_anak" name="jml_anak" value="{{data_guru.jml_anak}}" maxlength="2" class="form-control">
+              </div>
+            </div>
+            
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="masa_kerja_thn">Masa Kerja (Tahun):</label>
+                <input type="text" id="masa_kerja_thn" name="masa_kerja_thn" value="{{data_guru.masa_kerja_thn}}" class="form-control">
+              </div>
+            </div>
+            
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="masa_kerja_bln">Masa Kerja (Bulan):</label>
+                <input type="text" id="masa_kerja_bln" name="masa_kerja_bln" value="{{data_guru.masa_kerja_bln}}" class="form-control">
+              </div>
+            </div>
+            
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="tmt_sd">Tahun Tamat SD:</label>
+                <input type="date" id="tmt_sd" name="tmt_sd" value="{{data_guru.tmt_sd}}" class="form-control">
+              </div>
+            </div>
+            
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="pendidikan">Pendidikan:</label>
+                <input type="text" id="pendidikan" name="pendidikan" value="{{data_guru.pendidikan}}" class="form-control">
+              </div>
+            </div>
+            
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="jurusan">Jurusan:</label>
+                <input type="text" id="jurusan" name="jurusan" value="{{data_guru.jurusan}}" class="form-control">
+              </div>
+            </div>
+            
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="lulus">Tahun Lulus Pendidikan Tinggi:</label>
+                <input type="text" id="lulus" name="lulus" maxlength="4" value="{{data_guru.lulus}}" class="form-control">
+              </div>
+            </div>
+            
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="kelas_ajar">Jabatan: </label>
+                <input type="text" id="kelas_ajar" name="kelas_ajar" value="{{data_guru.kelas_ajar}}" class="form-control">
+              </div>
+            </div>
+            
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="jam_week">Jam/Minggu:</label>
+                <input type="text" id="jam_week" name="jam_week" maxlength="3" value="{{data_guru.jam_week}}" class="form-control">
+              </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="image_path_guru">Ganti Foto:</label>
+                <input  type="file" class="form-control-file" id="exampleFormControlFile1" name="image_path_guru"   class="form-control">
+              </div>     
+             </div>
+
+
+
+            </div>
+
+                <input id="input_form_button"  type="submit" value="update">
+            </form>
+    
+
+
+
+
+          
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+
+
+    {% endblock content %}
+
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+    <script src="//cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>
+
+    <script>
+      // Initialize CKEditor
+      CKEDITOR.replace("editor");
+
+
+
+
+      //== Class definition
+    var SweetAlert2Demo = function() {
+        var initDemos = function() {
+            $(document).on('click', '.alert_demo_7', function(e) {
+            e.preventDefault();
+            var formId = '#tambah_siswa' ; 
+            
+            
+                swal({
+                    title: 'Apakah data sudah benar?',
+                    text: "jika belum, silakan ulangi",
+                    type: 'warning',
+                    buttons:{
+                        confirm: {
+                            text : 'Ya, data sudah benar',
+                            className : 'btn btn-success'
+                        },
+                        cancel: {
+                          text : 'Kembali',
+                            visible: true,
+                            className: 'btn btn-danger'
+                        }
+                    }
+                }).then((Add) => {
+                    if (Add) {
+                        $(formId).submit();
+                        swal({
+                            title: 'Data Ditambahkan',
+                            text: 'Data siswa telah ditambahkan.',
+                            type: 'success',
+                            buttons : {
+                                confirm: {
+                                    className : 'btn btn-success'
+                                }
+                            }
+                        });
+                    } else {
+                        swal.close();
+                    }
+                });
+            })
+        };
+
+         
+        return {
+            //== Init
+            init: function() {
+                initDemos();
+            },
+        };
+    }();
+    
+    //== Class Initialization
+    jQuery(document).ready(function() {
+        SweetAlert2Demo.init();
+    });
+    </script>
+
+    {% endblock javascripts %}
+  </body>
+</html>

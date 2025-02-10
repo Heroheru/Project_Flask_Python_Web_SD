@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student</title>
+    <style>
+       
+
+       th, td {
+            padding: 5px; /* Jarak dalam sel */
+            text-align: left; /* Rata kiri teks */
+            border: 1px solid #ddd; /* Garis batas sel */
+            overflow-wrap: break-word; /* Memastikan kata panjang bisa terputus jika perlu */
+    word-wrap: break-word; /* Memastikan kata panjang bisa terputus jika perlu */
+    white-space: normal; /* Mengizinkan teks untuk dibungkus dalam batas sel */
+    hyphens: auto; /* Mengizinkan pemecahan kata secara otomatis */
+        }
+
+       
+
+@media (max-width: 600px) {
+  body {
+                font-family: 'Helvetica', sans-serif; /* Font untuk layar kecil */
+                font-size: 20px; /* Ukuran font untuk layar kecil */
+            }
+            table {
+                font-size: 12px; /* Ukuran font pada elemen card */
+                max-width: 100%;
+        
+            }
+
+          }
+           
+
+@media (min-width: 601px) {
+ 
+  table{
+          font-size: 15px;
+          width: 100%;
+        }
+}
+
+
+
+     .select-container{
+   
+      display: flex;
+     justify-content: center;
+     background-color: #fafafa;
+     }
+
+    .kapsul-container{
+    width: 700px;
+    height: 50px;
+    border-radius: 50px;
+    background-color: rgb(218, 255, 176);
+    padding: 5px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+  
+     }
+      
+
+    </style>
+</head>
+<body>
+
+
+ 
+
+  
+    
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}{% endblock stylesheets %}
+    
+    {% block content %}
+    
+
+   
+        <div class="content">
+            <div class="page-inner">
+              
+                <div class="col-md-12"> 
+
+                
+        
+                    <form style="background-color: #fafafa;" id="autoSubmitForm"  action="{{url_for('home_blueprint.find_data_jadwal_pelajaran')}}" method="post">
+                      <div class="select-container">
+                     
+                     
+                    
+                   
+                  </div>
+                  </form>
+            
+                    <div class="card">
+
+                     
+
+
+
+                        <div class="card-header">
+                          <h4 style="text-align: center;" class="card-title">JADWAL PELAJARAN SEMESTER {{setting.semester}} TAHUN AJARAN {{setting.tahun_ajaran}} </h4>
+                            <h4 style="text-align: center;" class="card-title">KELAS {{data_jadwal[0].for_kelas.nama_kelas}}</h4>
+                        </div>   
+                        
+                       
+                                      
+                          
+                               
+              <div style="  overflow-x: hidden; "  class="table-responsive">
+                <table
+  
+                style=" border-collapse: collapse; table-layout: fixed;   "
+                >
+                  <thead>
+                    <tr>
+                      <th>Kelas</th>
+                      <th>Hari</th>
+                      <th>Jam Mulai</th>
+                      <th>Jam Selesai</th>
+                      <th>Mata Pelajaran</th>
+              
+                  
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                   {% for jadwals in data_jadwal %}
+                    <tr>
+                     
+                      <td>{{ jadwals.for_kelas.nama_kelas}}</td>
+                      <td>{{ jadwals.hari }}</td>
+                      <td>{{ jadwals.jam_mulai }}</td>
+                      <td>{{ jadwals.jam_selesai }}</td>
+                      <td>{{ jadwals.for_matpel.nama_mata_pelajaran }}</td>
+                     
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+          
+                            
+                                   
+                        </div>
+            </div>
+        </div>
+    </div>
+      
+
+    
+    {% endblock content %}
+    
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+    
+       
+    {% endblock javascripts %}
+    
+</body>
+</html>

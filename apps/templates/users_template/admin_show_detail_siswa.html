@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Biodata Siswa</title>
+  </head>
+  <body>
+    {% extends "layouts/base.html" %} {% block title %} UI Datatables {%
+    endblock %}
+
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}{% endblock stylesheets %} {% block content %}
+
+    <div class="content">
+      <div class="page-inner">
+        
+
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="header-info">
+                <h2>BIODATA SISWA</h2>
+              </div>
+
+              <form action="{{ url_for('home_blueprint.admin_download_biodata_siswa') }}" method="POST">
+                <input type="hidden" name="nisn" value="{{data_siswa.nisn }}">
+                <button style="margin-bottom: 15px; "  type="submit" class="btn btn-primary">Download PDF</button>
+            </form>    
+         
+           
+              <div class="row">
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                      <label>Nis</label>
+                     <p>{{data_siswa.nisn}}</p>
+                  </div>
+              </div>
+
+              <div class="col-md-4 pr-0">
+                <div class="form-group form-group-default">
+                    <label>Nipd</label>
+                   <p>{{data_siswa.nipd}}</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 pr-0">
+              <div class="form-group form-group-default">
+                  <label>Nik</label>
+                 <p>{{data_siswa.nik}}</p>
+              </div>
+          </div>
+
+                <div class="col-sm-12">
+                    <div class="form-group form-group-default">
+                        <label>Nama Siswa</label>
+                        <p>{{data_siswa.nama}}</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 pr-0">
+                  <div class="form-group form-group-default">
+                      <label>Tempat Lahir</label>
+                      <p>{{data_siswa.tempat_lahir}}</p>
+                  </div>
+              </div>
+
+              <div class="col-md-6 pr-0">
+                <div class="form-group form-group-default">
+                    <label>Tanggal Lahir</label>
+                    <p>{{data_siswa.tanggal_lahir}}</p>
+                </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                      <label>Jenis Kelamin</label>
+                      <p>{{data_siswa.jk}}</p>
+                  </div>
+              </div>
+               
+                <div class="col-sm-12">
+                    <div class="form-group form-group-default">
+                        <label>Kelas</label> 
+                       
+                           <p>{{data_siswa.for_kelas.nama_kelas}}</p>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="agama">Agama:</label>
+             
+                  <p></p>{{data_siswa.agama}}</p>
+              
+                </div>
+              </div>
+            
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="alamat">Alamat:</label>
+               <p>{{data_siswa.alamat}}</p>
+             </div>
+            </div>
+
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="rt">RT:</label>
+                <p>{{data_siswa.rt}}</p>
+             </div>
+            </div>
+
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="rw">RW:</label>
+                <p>{{data_siswa.rw}}</p>
+             </div>
+            </div>
+
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="dusun">Dusun:</label>
+                <p>{{data_siswa.dusun}}</p>
+             </div>
+            </div>
+
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="kelurahan">Kelurahan:</label>
+               <p>{{data_siswa.kelurahan}}</p>
+             </div>
+            </div>
+
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="kecamatan">Kecamatan:</label>
+                <p>{{data_siswa.kecamatan}}</p>
+             </div>
+            </div>
+
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="kode_pos">Kode Pos:</label>
+                <p>{{data_siswa.kode_pos}}</p>
+             </div>
+            </div>
+
+                <div class="col-md-6 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="jenis_tinggal">Jenis Tinggal:</label>
+                <p>{{data_siswa.jenis_tinggal}}</p>
+             </div>
+            </div>
+
+                <div class="col-md-6 pr-0">
+                  <div class="form-group form-group-default">
+          
+                <label for="alat_transportasi">Alat Transportasi:</label>
+                <p>{{data_siswa.alat_transportasi}}</p>
+ </div>
+</div>
+
+                <div class="col-md-6 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="no_hp">No HP:</label>
+                <p>{{data_siswa.no_hp}}</p>
+             </div>
+            </div>
+
+                <div class="col-md-6 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="email">Email:</label>
+                <p>{{data_siswa.email}}</p>
+              </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="skhun">SKHUN:</label>
+                <p>{{data_siswa.skhun}}</p>
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="penerima_kps">Penerima KPS:</label>
+                <p>{{data_siswa.penerima_kps}}</p>
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="no_kps">No KPS:</label>
+                <p>{{data_siswa.no_kps}}</p>
+             </div>
+            </div>
+
+            <div style="margin-left: 15px;" class="header-info">
+              <h2>BIODATA AYAH</h2>
+            </div>
+
+
+            <div class="col-sm-12">
+              <div class="form-group form-group-default">
+            <label for="nama_ayah">Nama Ayah:</label>
+            <p>{{data_siswa.nama_ayah}}</p>
+         </div>
+        </div>
+
+        <div class="col-sm-12">
+          <div class="form-group form-group-default">
+        <label for="TLA">Tahun Lahir Ayah:</label>
+        <p>{{data_siswa.tahun_lahir_ayah}}</p>
+     </div>
+    </div>
+
+    <div class="col-sm-12">
+      <div class="form-group form-group-default">
+    <label for="pekerjaan_ayah">Pekerjaan Ayah:</label>
+    <p>{{data_siswa.pekerjaan_ayah}}</p>
+ </div>
+</div>
+
+
+<div class="col-sm-12">
+  <div class="form-group form-group-default">
+<label for="pendidikan_ayah"> jenjang pendidikan ayah:</label>
+
+  <p>{{data_siswa.jenjang_pendidikan_ayah}}</p>
+</div>
+</div>
+
+
+
+
+<div class="col-sm-12">
+  <div class="form-group form-group-default">
+<label for="penghasilan_ayah">Penghasilan Ayah:</label>
+<p>{{data_siswa.penghasilan_ayah}}</p>
+</div>
+</div>
+
+<div class="col-sm-12">
+<div class="form-group form-group-default">
+<label for="nik_ayah">Nik Ayah:</label>
+<p</p>{{data_siswa.nik_ayah}}</p>
+</div>
+</div>
+
+
+        <div style="margin-left: 15px;"  class="header-info">
+          <h2>BIODATA IBU</h2>
+        </div>
+
+
+            <div class="col-sm-12">
+              <div class="form-group form-group-default">
+            <label for="nama_ibu">Nama Ibu:</label>
+            <p>{{data_siswa.nama_ibu}}</p>
+         </div>
+        </div>
+
+        <div class="col-sm-12">
+          <div class="form-group form-group-default">
+        <p>{{data_siswa.tahun_lahir_ibu}}</p>
+     </div>
+    </div>
+
+    <div class="col-sm-12">
+      <div class="form-group form-group-default">
+    <label for="pekerjaan_ibu">Pekerjaan Ibu:</label>
+    <p>{{data_siswa.pekerjaan_ibu}}</p>
+ </div>
+</div>
+
+<div class="col-sm-12">
+  <div class="form-group form-group-default">
+<label for="pendidikan_ibu"> jenjang pendidikan ibu:</label>
+<p>{{data_siswa.jenjang_pendidikan_ibu}}</p>
+</div>
+</div>
+
+
+<div class="col-sm-12">
+  <div class="form-group form-group-default">
+<label for="penghasilan_ibu">Penghasilan Ibu:</label>
+<p>{{data_siswa.penghasilan_ibu}}</p>
+</div>
+</div>
+
+<div class="col-sm-12">
+<div class="form-group form-group-default">
+<label for="nik_ibu">Nik Ibu:</label>
+<p>{{data_siswa.nik_ibu}}</p>
+</div>
+</div>
+
+
+        <div style="margin-left: 15px;"  class="header-info">
+          <h2>BIODATA WALI</h2>
+        </div>
+
+
+            <div class="col-sm-12">
+              <div class="form-group form-group-default">
+            <label for="nama_wali">Nama Wali:</label>
+            <p>{{data_siswa.nama_wali}}</p>
+         </div>
+        </div>
+
+        <div class="col-sm-12">
+          <div class="form-group form-group-default">
+        <label for="TLW">Tahun Lahir Wali:</label>
+        <p>{{data_siswa.tahun_lahir_wali}}</p>
+     </div>
+    </div>
+
+    <div class="col-sm-12">
+      <div class="form-group form-group-default">
+    <label for="pekerjaan_wali">Pekerjaan Wali:</label>
+    <p>{{data_siswa.pekerjaan_wali}}</p>
+ </div>
+</div>
+
+<div class="col-sm-12">
+  <div class="form-group form-group-default">
+<label for="pendidikan_wali"> jenjang pendidikan wali:</label>
+<p>{{data_siswa.jenjang_pendidikan_wali}}</p>
+</div>
+</div>
+
+
+<div class="col-sm-12">
+  <div class="form-group form-group-default">
+<label for="penghasilan_wali">Penghasilan wali:</label>
+<p>{{data_siswa.penghasilan_wali}}</p>
+</div>
+</div>
+
+<div class="col-sm-12">
+<div class="form-group form-group-default">
+<label for="nik_wali">Nik wali:</label>
+<p>{{data_siswa.nik_wali}}</p>
+</div>
+</div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="no_peserta_ujian_nasional">No Peserta Ujian Nasional:</label>
+                <p>{{data_siswa.no_peserta_ujian_nasional}}</p>
+             </div>
+ </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="no_seri_ijazah">No Seri Ijazah:</label>
+                <p>{{data_siswa.no_seri_ijazah}}</p>
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="penerima_kip">Penerima KIP:</label>
+                <p>{{data_siswa.penerima_kip}}</p>
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="nomor_kip">Nomor KIP:</label>
+                <p>{{data_siswa.nomor_kip}}</p>
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="nama_kip">Nama KIP:</label>
+              <p>{{data_siswa.nama_kip}}</p>
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="nomor_kks">Nomor KKS:</label>
+                <p>{{data_siswa.nomor_kks}}</p>
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="noreg_akta_lahir">No Reg Akta Lahir:</label>
+               <p>{{data_siswa.noreg_akta_lahir}}</p>
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="bank">Bank:</label>
+                <p>{{data_siswa.bank}}</p>
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="no_rek_bank">No Rek Bank:</label>
+               <p>{{data_siswa.no_rek_bank}}</p>
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="nama_rek_bank">Nama Rek Bank:</label>
+               <p>{{data_siswa.nama_rek_bank}}</p>
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="layak_pip">Layak PIP:</label>
+                <p>{{data_siswa.layak_pip}}</p>
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="alasan_layak_pip">Alasan Layak PIP:</label>
+               <p>{{data_siswa.alasan_layak_pip}}</p>
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="kebutuhan_khusus">Kebutuhan Khusus:</label>
+                <p></p>{{data_siswa.kebutuhan_khusus}}</p>
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="sekolah_asal">Sekolah Asal:</label>
+                <p>{{data_siswa.sekolah_asal}}</p>
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="anak_ke">Anak Ke:</label>
+                <p></p>{{data_siswa.anak_ke}}</p>
+             </div>
+            </div>
+
+                <div class="col-md-6 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="lintang">Lintang:</label>
+                <p>{{data_siswa.lintang}}</p>
+             </div>
+            </div>
+
+                <div class="col-md-6 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="bujur">Bujur:</label>
+                <p>{{data_siswa.bujur}}</p>
+             </div>
+            </div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="no_kk">No KK:</label>
+                <p>{{data_siswa.no_kk}}</p>
+             </div>
+            </div>
+
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="berat_badan">Berat Badan (kg):</label>
+                <p>{{data_siswa.berat_badan}}</p>
+             </div>
+            </div>
+
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="tinggi_badan">Tinggi Badan (cm):</label>
+               <p>{{data_siswa.tinggi_badan}}</p>
+             </div>
+            </div>
+
+                <div class="col-md-4 pr-0">
+                  <div class="form-group form-group-default">
+                <label for="lingkar_kepala">Lingkar Kepala (cm):</label>
+               <p>{{data_siswa.lingkar_kepala}}</p>
+ </div>
+</div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="jml_saudara">Jumlah Saudara:</label>
+                <p>{{data_siswa.jml_saudara}}</p>
+ </div>
+</div>
+
+                <div class="col-sm-12">
+                  <div class="form-group form-group-default">
+                <label for="jarak">Jarak Rumah Ke Sekolah</label>
+                <p>{{data_siswa.jarak_rumah_sekolah}}</p>
+ </div>
+</div>
+
+         
+                   
+
+
+
+<!--           
+            <button type="button" data-toggle="tooltip" title="" class="btn btn-secondary alert_demo_7" data-original-title="Tambah"  >
+              <span class="btn-label">
+                <i class="fa fa-plus"></i>
+              </span>
+              Submit
+          </button>
+        -->
+         
+          
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+
+
+    {% endblock content %}
+
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+    <script src="//cdn.ckeditor.com/4.22.1/basic/ckeditor.js"></script>
+
+    <script>
+      // Initialize CKEditor
+      CKEDITOR.replace("editor");
+
+
+
+
+      //== Class definition
+    var SweetAlert2Demo = function() {
+        var initDemos = function() {
+            $(document).on('click', '.alert_demo_7', function(e) {
+            e.preventDefault();
+            var formId = '#tambah_siswa' ; 
+            
+            
+                swal({
+                    title: 'Apakah data sudah benar?',
+                    text: "jika belum, silakan ulangi",
+                    type: 'warning',
+                    buttons:{
+                        confirm: {
+                            text : 'Ya, data sudah benar',
+                            className : 'btn btn-success'
+                        },
+                        cancel: {
+                          text : 'Kembali',
+                            visible: true,
+                            className: 'btn btn-danger'
+                        }
+                    }
+                }).then((Add) => {
+                    if (Add) {
+                        $(formId).submit();
+                        swal({
+                            title: 'Data Ditambahkan',
+                            text: 'Data siswa telah ditambahkan.',
+                            type: 'success',
+                            buttons : {
+                                confirm: {
+                                    className : 'btn btn-success'
+                                }
+                            }
+                        });
+                    } else {
+                        swal.close();
+                    }
+                });
+            })
+        };
+
+         
+        return {
+            //== Init
+            init: function() {
+                initDemos();
+            },
+        };
+    }();
+    
+    //== Class Initialization
+    jQuery(document).ready(function() {
+        SweetAlert2Demo.init();
+    });
+    </script>
+
+    {% endblock javascripts %}
+  </body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Setting</title>
+    
+</head>
+<body>
+
+
+    {% extends "layouts/base.html" %}
+
+    {% block title %} UI Datatables {% endblock %} 
+    
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}
+    
+    <style>
+      
+    </style>
+    {% endblock stylesheets %}
+    
+    {% block content %}
+    
+
+
+        <div class="content">
+            <div class="page-inner">
+                <div class="page-header">
+                   
+                </div>
+                <div class="col-md-12">
+                    <div style="padding: 20px;" class="card">
+                        <div  class="card-header"> 
+                            <h4 style="text-align: center;" class="card-title">
+                                <b>MODIFIKASI SETTING</b> 
+                              </h4>
+                        </div>
+                    
+                            <form id="edit_setting" method="POST" action="{{ url_for('home_blueprint.admin_settings')}}" enctype="multipart/form-data">
+                                <div class="card-body">
+                                    <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Semester</label>
+                                        <select id="semester" name="semester" class="form-control"  required>
+                                            <option value="{{setting.semester}}" >{{setting.semester}}</option>
+                                            <option value="1">Ganjil/Satu</option>
+                                            <option value="2">Genap/Dua</option>
+                                          </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Assesment Summatif</label>
+                                        <select id="ASM" name="ASM" class="form-control"  required>
+                                            <option value="{{setting.assesment_sumatif}}" >{{setting.assesment_sumatif}}</option>
+                                            <option value="Tengah Semester">Tengah Semester</option>
+                                            <option value="Akhir Semester">Akhir Semester</option>
+                                          </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Tahun Ajaran</label>
+                                        <input class="form-control" style="width: 100%;"  type="text" name="tahun_ajaran" value="{{ setting.tahun_ajaran }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                <label for="siswa_baru"> Siswa Baru (Tahun Ajaran Baru)</label>
+                                <input type="checkbox" id="siswa_baru" name="siswa_baru" {% if setting.siswa_baru %}checked{% endif %}>
+                            </div>
+                        </div>
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </form>
+                            
+                           </div>
+                        </div>
+            </div>
+
+        </div>
+
+        
+    </div>
+
+
+    
+
+
+      
+</div>
+    
+    {% endblock content %}
+    
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+    
+       
+    {% endblock javascripts %}
+    
+</body>
+</html>

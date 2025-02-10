@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student</title>
+    <style>
+       
+
+       th, td {
+            padding: 5px; /* Jarak dalam sel */
+            text-align: left; /* Rata kiri teks */
+            border: 1px solid #ddd; /* Garis batas sel */
+            overflow-wrap: break-word; /* Memastikan kata panjang bisa terputus jika perlu */
+    word-wrap: break-word; /* Memastikan kata panjang bisa terputus jika perlu */
+    white-space: normal; /* Mengizinkan teks untuk dibungkus dalam batas sel */
+    hyphens: auto; /* Mengizinkan pemecahan kata secara otomatis */
+        }
+
+       
+
+@media (max-width: 600px) {
+  body {
+                font-family: 'Helvetica', sans-serif; /* Font untuk layar kecil */
+                font-size: 20px; /* Ukuran font untuk layar kecil */
+            }
+            table {
+                font-size: 12px; /* Ukuran font pada elemen card */
+                max-width: 100%;
+        
+            }
+
+          }
+           
+
+@media (min-width: 601px) {
+ 
+  table{
+          font-size: 15px;
+          width: 100%;
+        }
+}
+
+
+
+     .select-container{
+   
+      display: flex;
+     justify-content: center;
+     background-color: #fafafa;
+     }
+
+    .kapsul-container{
+    width: 700px;
+    height: 50px;
+    border-radius: 50px;
+    background-color: rgb(218, 255, 176);
+    padding: 5px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+  
+     }
+      
+
+    </style>
+</head>
+<body>
+
+
+    {% extends "layouts/base.html" %}
+
+    {% block title %} UI Datatables {% endblock %} 
+    
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}{% endblock stylesheets %}
+    
+    {% block content %}
+    
+
+    
+        <div class="content">
+            <div class="page-inner">
+              <div >
+                <h4 style="text-align: center;" class="page-title">JADWAL UJIAN</h4>
+              </div>
+                <div class="col-md-12"> 
+
+                
+        
+                    <form style="background-color: #fafafa;" id="autoSubmitForm"  action="{{url_for('home_blueprint.find_data_jadwal_ujian')}}" method="post">
+                      <div class="select-container">
+                     
+                     
+                        <select name="pilih_kelas" class="kapsul-container" onchange="document.getElementById('autoSubmitForm').submit();">
+                          <option value="" disabled selected>Pilih Kelas</option>
+                          {%for kelas in data_kelas%}
+                                <option value="{{kelas.id_kelas_jadwal}}">{{kelas.nama_kelas_jadwal}}</option>
+                         {%endfor%}
+                        </select>
+                   
+                  </div>
+                  </form>
+            
+          
+                    <div class="card">
+
+                     
+
+
+
+                        <div class="card-header">
+
+                          <h4 style="text-align: center;" class="page-title"><b>JADWAL UJIAN {{setting.assesment_sumatif}} {{setting.semester}} TAHUN AJARAN {{setting.tahun_ajaran}} </b></h4>
+                          <h4 style="text-align: center;" class="page-title"><b>KELAS {{data_jadwal[0].foreign_kelas.nama_kelas_jadwal}}</b></h4>
+                        </div>   
+                        
+                       <div style="display: flex; justify-content: center; margin-top: 20px; margin-bottom: 20px;">
+                        <form action="{{ url_for('home_blueprint.download_jadwal_ujian_pdf') }}" method="POST">
+                          <input type="hidden" name="pilih_kelas" value="{{data_jadwal[0].kelas }}">
+                          <button type="submit" class="btn btn-primary">Download PDF</button>
+                      </form>     
+                    </div>     
+                          
+                               
+              <div style="  overflow-x: hidden; "  class="table-responsive">
+                <table
+  
+                style=" border-collapse: collapse; table-layout: fixed;   "
+                >
+                  <thead>
+                    <tr>
+                      <th>Kelas</th>
+                      <th>Hari</th>
+                      <th>Tanggal</th>
+                      <th>Mata Pelajaran</th>
+                      <th>Pengawas</th>
+                      <th>Keterangan</th>
+                 
+                  
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {% for jadwals in data_jadwal %}
+                    <tr>
+                     
+                      <td>{{ jadwals.foreign_kelas.nama_kelas_jadwal}}</td>
+                      <td>{{ jadwals.hari }}</td>
+                      <td>{{ jadwals.formatted_tanggal }}</td>
+                      <td>{{ jadwals.for_matpel.nama_mata_pelajaran }}</td>
+                      <td>{{ jadwals.for_guru.nama}}</td>
+                      <td>{{ jadwals.keterangan}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+          
+                            
+                                   
+                        </div>
+            </div>
+        </div>
+    </div>
+      
+
+    
+    {% endblock content %}
+    
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+    
+       
+    {% endblock javascripts %}
+    
+</body>
+</html>

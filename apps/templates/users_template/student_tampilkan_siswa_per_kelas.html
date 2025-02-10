@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student</title>
+
+   
+  </head>
+  <body>
+    {% extends "layouts/base.html" %} {% block title %} UI Datatables {%
+    endblock %}
+
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}
+    <style>
+       
+
+      th, td {
+           padding: 5px; /* Jarak dalam sel */
+           text-align: left; /* Rata kiri teks */
+           border: 1px solid #ddd; /* Garis batas sel */
+           overflow-wrap: break-word; /* Memastikan kata panjang bisa terputus jika perlu */
+   word-wrap: break-word; /* Memastikan kata panjang bisa terputus jika perlu */
+   white-space: normal; /* Mengizinkan teks untuk dibungkus dalam batas sel */
+   hyphens: auto; /* Mengizinkan pemecahan kata secara otomatis */
+       }
+
+       .tempat-download{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+       }
+
+      
+
+@media (max-width: 600px) {
+ body {
+               font-family: 'Helvetica', sans-serif; /* Font untuk layar kecil */
+               font-size: 20px; /* Ukuran font untuk layar kecil */
+           }
+           table {
+               font-size: 12px; /* Ukuran font pada elemen card */
+               max-width: 100%;
+       
+           }
+
+         }
+          
+
+@media (min-width: 601px) {
+
+ table{
+         font-size: 15px;
+         width: 100%;
+       }
+}
+
+
+
+    .select-container{
+  
+     display: flex;
+    justify-content: center;
+    background-color: #fafafa;
+    }
+
+   .kapsul-container{
+   width: 700px;
+   height: 50px;
+   border-radius: 50px;
+   background-color: rgb(218, 255, 176);
+   padding: 5px;
+   margin-top: 15px;
+   margin-bottom: 30px;
+ 
+    }
+     
+
+   </style>
+   {% endblock stylesheets %} 
+   
+   {% block content %}
+
+    
+
+    
+    
+        <div class="content">
+            <div class="page-inner">
+              <div >
+                <h4 style="text-align: center;" class="page-title"><b>DATA SISWA SEMESTER {{setting.semester}} TAHUN AJARAN {{setting.tahun_ajaran}}</b></h4>
+              </div>
+                <div class="col-md-12"> 
+
+                
+        
+                    <form style="background-color: #fafafa;" id="autoSubmitForm"  action="{{url_for('home_blueprint.find_data_student')}}" method="post">
+                      <div class="select-container">
+                     
+                     
+                        <select name="pilih_kelas" class="kapsul-container" onchange="document.getElementById('autoSubmitForm').submit();">
+                          <option value="" disabled selected>Pilih Kelas</option>
+                          {%for kelas in data_kelas%}
+                                <option value="{{kelas.id_kelas}}">{{kelas.nama_kelas}}</option>
+                         {%endfor%}
+                        </select>
+                   
+                  </div>
+                  </form>
+            
+                    <div class="card">
+
+                     
+                      
+                        <div class="card-header">
+                          
+                            <h4 style="text-align: center;" class="card-title"><b>KELAS  {{users[0].for_kelas.nama_kelas}}</b></h4>
+                        </div>   
+                       
+                       
+               
+<div class="card-body">
+  <div class="tempat-download">
+  <form action="{{ url_for('home_blueprint.download_data_siswa_pdf') }}" method="POST">
+    <input type="hidden" name="pilih_kelas" value="{{users[0].kelas }}">
+    <button type="submit" class="btn btn-primary">Download Data Siswa PDF</button>
+</form> 
+</div>
+                               
+              <div style="  overflow-x: hidden; "  class="table-responsive">
+                <table
+  
+                style=" border-collapse: collapse; table-layout: fixed;   "
+                >
+             
+                <thead>
+                  <tr>
+                    <th style="width: 50px; text-align: center;">No</th>
+                    <th style=" text-align: center;">Nama</th>
+                    <th style=" text-align: center;">Jenis Kelamin</th>
+                    <th style=" text-align: center;">Kelas</th>
+     
+                   
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {% for user in users %}
+                  <tr>
+                    <td style=" text-align: center;">{{ loop.index }}</td>
+                    <td>{{ user.nama }}</td>
+                    <td style=" text-align: center;">{{ user.jk }}</td>
+                    <td style=" text-align: center;">{{ user.for_kelas.nama_kelas }}</td>
+           
+                  </tr>
+                  {% endfor %}
+                </tbody>
+                 
+                 
+                </table>
+              </div>
+          
+            </div>         
+                                   
+                        </div>
+            </div>
+        </div>
+    </div>
+      
+
+    {% endblock content %}
+
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+
+    <!-- Atlantis DEMO methods, don't include it in your project! -->
+    <!-- <script src="/static/assets/js/setting-demo2.js"></script> -->
+    <script>
+      $(document).ready(function () {
+        $("#basic-datatables").DataTable({});
+
+        $("#multi-filter-select").DataTable({
+          pageLength: 5,
+          initComplete: function () {
+            this.api()
+              .columns()
+              .every(function () {
+                var column = this;
+                var select = $(
+                  '<select class="form-control"><option value=""></option></select>'
+                )
+                  .appendTo($(column.footer()).empty())
+                  .on("change", function () {
+                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                    column
+                      .search(val ? "^" + val + "$" : "", true, false)
+                      .draw();
+                  });
+
+                column
+                  .data()
+                  .unique()
+                  .sort()
+                  .each(function (d, j) {
+                    select.append(
+                      '<option value="' + d + '">' + d + "</option>"
+                    );
+                  });
+              });
+          },
+        });
+
+        // Add Row
+        $("#add-row").DataTable({
+          pageLength: 5,
+        });
+
+        // var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+
+        // $('#addRowButton').click(function() {
+        //     $('#add-row').dataTable().fnAddData([
+        //         $("#nama_siswa").val(),
+        //         $("#nis").val(),
+        //         $("#id_kelas").val(),
+        //         action
+        //         ]);
+        //     $('#addRowModal').modal('hide');
+
+        // });
+      });
+    </script>
+
+    {% endblock javascripts %}
+  </body>
+</html>

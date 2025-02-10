@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student</title>
+    
+</head>
+<body>
+
+
+    {% extends "layouts/base.html" %}
+
+    {% block title %} UI Datatables {% endblock %} 
+    
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}
+    
+    <style>
+        .grid-container-acara {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .card_acara {
+            flex: 1 1 calc(25% - 20px); /* Mengatur 4 card per baris */
+            max-width: calc(25% - 20px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            background-color: #fff;
+            font-size: small ;
+        }
+        
+        .card_acara img {
+            width: 100%;
+            height: auto; /* Memastikan tinggi gambar mengikuti proporsi */
+            max-height: 200px; /* Membatasi tinggi gambar agar tidak terlalu besar */
+            object-fit: cover; 
+        }
+        
+        .card-informasi {
+            padding: 10px;
+            background-color: rgb(226, 255, 223) ;
+            height: 100%;
+        }
+        
+        /* Responsif untuk layar kecil */
+        @media (max-width: 768px) {
+            .card_acara{
+                flex: 1 1 calc(50% - 20px); /* 2 card per baris untuk layar lebih kecil */
+                font-size: small;
+            }
+
+            
+        }
+
+        @media (max-width: 480px) {
+            .card_acara {
+                flex: 1 1 calc(50% - 20px); /* 1 card per baris untuk layar sangat kecil */
+                max-width: 100%;
+                font-size: small;
+            }
+        }
+    </style>
+    {% endblock stylesheets %}
+    
+    {% block content %}
+    
+
+
+        <div class="content">
+            <div class="page-inner">
+                <div class="page-header">
+                    
+                </div>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 style="text-align: center;" class="card-title"><b>FASILITAS SD BINTARA II</b></h4>
+                        </div>
+                    <div class="grid-container-acara">
+            
+                    {%for fasil in data_fasilitas%}
+                    <div class="card_acara" data-toggle="modal" title="" class="btn btn-link btn-primary btn-lg">
+                        <img src="{{fasil.gambar_fasilitas}}" alt="Foto fasilitas">
+
+                        <div class="card-informasi">
+                            <p>{{fasil.nama_fasilitas}}</p>
+                        </div>
+
+
+
+                    </div>
+                    {%endfor%}
+                    
+                    <!-- Tambahkan lebih banyak card sesuai jumlah data guru -->
+                </div>
+            </div>
+        </div>
+
+
+        
+    </div>
+
+
+    
+
+
+      
+</div>
+    
+    {% endblock content %}
+    
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+    
+       
+    {% endblock javascripts %}
+    
+</body>
+</html>

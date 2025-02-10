@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Data Profil</title>
+    
+</head>
+<body>
+
+
+    {% extends "layouts/base.html" %}
+
+    {% block title %} UI Datatables {% endblock %} 
+    
+    <!-- Specific Page CSS goes HERE  -->
+    {% block stylesheets %}
+    
+    <style>
+      
+    </style>
+    {% endblock stylesheets %}
+    
+    {% block content %}
+    
+
+
+        <div class="content">
+            <div class="page-inner">
+                <div class="page-header">
+                   
+                </div>
+                <div class="col-md-12">
+                    <div style="padding: 20px;" class="card">
+                        <div  class="card-header"> 
+                            <h4 style="text-align: center;"> <b>MODIFIKASI PROFIL SDN BINTARA 2 KOTA BEKASI</b></h4>
+                        </div>
+                    
+                            <form id="edit_fasilitas" method="POST" action="{{ url_for('home_blueprint.admin_edit_profile_sekolah', id_profile_sekolah=profil.id_sekolah)}}" enctype="multipart/form-data">
+                                <div class="card-body">
+                                    <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Nama Sekolah</label>
+                                        <input class="form-control" style="width: 100%;"  type="text" name="nama_sklh" value="{{ profil.nama_sklh }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>NIS</label>
+                                        <input class="form-control" style="width: 100%;"  type="text" name="nis" value="{{ profil.nis }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>NSS</label>
+                                        <input class="form-control" style="width: 100%;"  type="text" name="nss" value="{{ profil.nss }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Propinsi</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="provinsi" value="{{ profil.provinsi }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Otonomi</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="otonomi" value="{{ profil.otonomi }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Kecamatan</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="kecamatan" value="{{ profil.kecamatan }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Desa/Kelurahan</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="desa_kelurahan" value="{{ profil.desa_kelurahan }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Jalan</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="jln_no" value="{{ profil.jln_no }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Kode Pos</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="kode_pos" value="{{ profil.kode_pos }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Telephone</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="telepon" value="{{ profil.telepon }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Faximile</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="faximile" value="{{ profil.faximile }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Daerah</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="daerah" value="{{ profil.daerah }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Status Sekolah</label>
+                                        <input class="form-control"  style="width: 100%;" type="text" name="status_sklh" value="{{ profil.status_sklh }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Kelompok Sekolah</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="kelompok_sklh" value="{{ profil.kelompok_sklh }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Akreditasi</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="akreditasi" value="{{ profil.akreditasi }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Surat Keputusan SK</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="surat_keputusan_sk" value="{{ profil.surat_keputusan_sk }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Tanggal SK</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="tanggal_sk" value="{{ profil.tanggal_sk }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Penerbit SK</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="penerbit_sk" value="{{ profil.penerbit_sk }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Tahun Berdiri</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="thn_berdiri" value="{{ profil.thn_berdiri }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Tahun Perubahan</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="thn_perubahan" value="{{ profil.thn_perubahan }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Kegiatan Belajar Mengajar</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="kegiatan_bljr_mengajar" value="{{ profil.kegiatan_bljr_mengajar }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Bangunan Sekolah</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="bangunan_sklh" value="{{ profil.bangunan_sklh }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Luas Bangunan (M2)</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="luas_bangunan" value="{{ profil.luas_bangunan }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Lokasi Sekolah</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="lokasi_sklh" value="{{ profil.lokasi_sklh }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Jarak ke Kecamatan</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="jarak_kecamatan" value="{{ profil.jarak_kecamatan }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Jarak ke Otoda</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="jarak_otoda" value="{{ profil.jarak_otoda }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Terletak pada Lintasan</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="terletak_pd_lintasan" value="{{ profil.terletak_pd_lintasan }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Jumlah Keanggotaan Gugus</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="jmlh_keanggotaan_gugus" value="{{ profil.jmlh_keanggotaan_gugus }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Organisasi Penyelenggara</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="organisasi_penyelenggara" value="{{ profil.organisasi_penyelenggara }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group form-group-default">
+                                        <label>Perjalanan Perubahan Sekolah</label>
+                                        <input class="form-control" style="width: 100%;" type="text" name="perjalanan_perubahan_sklh" value="{{ profil.perjalanan_perubahan_sklh }}">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </form>
+                            
+                           </div>
+                        </div>
+            </div>
+
+        </div>
+
+        
+    </div>
+
+
+    
+
+
+      
+</div>
+    
+    {% endblock content %}
+    
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}
+    
+       
+    {% endblock javascripts %}
+    
+</body>
+</html>
